@@ -1,0 +1,35 @@
+{
+  "name": "ros2bridge",
+  "version": "0.0.1",
+  "description": "Bridge the web clients to ROS2.0 by a JSON interface",
+  "main": "index.js",
+  "keywords": [
+    "rosbridge",
+    "ros2bridge",
+    "ros2",
+    "rclnodejs"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint --max-warnings=0 index.js lib examples"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobotWebTools/rosbridge_suite.git"
+  },
+  "authors": [
+    "Minggang Wang <minggang.wang@intel.com>",
+    "Kenny Yuan <kaining.yuan@intel.com>"
+  ],
+  "devDependencies": {
+    "express": "^4.16.2",
+    "eslint": "^3.19.0",
+    "mocha": "^3.5.0"
+  },
+  "dependencies": {
+    "rclnodejs": "^0.2.0",
+    "debug": "^3.1.0",
+    "ws": "^3.3.2"
+  }
+}
