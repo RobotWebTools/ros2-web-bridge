@@ -20,30 +20,40 @@ const NodeManager = require('./lib/node_manager.js');
 const Bridge = require('./lib/bridge.js');
 const debug = require('debug')('ros2bridge:index');
 
-rclnodejs.init().then(() => {
-  let node = rclnodejs.createNode('ros2bridge_node');
-  let nodeManager = new NodeManager(node);
-  let bridgeMap = new Map();
-  let server = new Server({port: 9090});
+function createServer(options) {
+  options = options || {};
+  options.port = options.port || 9090;
 
-  server.on('connection', (ws) => {
-    let bridge = new Bridge(nodeManager, ws);
-    bridgeMap.set(bridge.bridgeId, {ws: ws, bridge: bridge});
+  return rclnodejs.init().then(() => {
+    let node = rclnodejs.createNode('ros2bridge_node');
+    let nodeManager = new NodeManager(node);
+    let bridgeMap = new Map();
+    let server = new Server({port: options.port});
 
-    ws.on('message', (message) => {
-      bridge.receiveMessage(message);
+    server.on('connection', (ws) => {
+      let bridge = new Bridge(nodeManager, ws);
+      bridgeMap.set(bridge.bridgeId, {ws: ws, bridge: bridge});
+
+      ws.on('message', (message) => {
+        bridge.receiveMessage(message);
+      });
+
+      ws.on('close', () => {
+        let bridge = bridgeMap.get(ws);
+        bridgeMap.delete(ws);
+        debug('disconnected');
+      });
     });
-    ws.on('close', () => {
-      let bridge = bridgeMap.get(ws);
-      bridgeMap.delete(ws);
-      debug('disconnected');
+
+    server.on('error', (error) => {
+      nodeManager.shutdown();
+      debug('WebSocket error: ' + error);
     });
-  });
 
-  server.on('error', (error) => {
-    nodeManager.shutdown();
-    debug('WebSocket error: ' + error);
+    rclnodejs.spin(node);
   });
+}
 
-  rclnodejs.spin(node);
-});
+module.exports = {
+  createServer: createServer,
+};
