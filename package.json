@@ -9,6 +9,9 @@
     "ros2",
     "rclnodejs"
   ],
+  "bin": {
+    "rosbridge": "bin/rosbridge.js"
+  },
   "scripts": {
     "test": "mocha",
     "lint": "eslint --max-warnings=0 index.js lib examples"
