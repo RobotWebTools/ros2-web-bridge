@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "lint": "eslint --max-warnings=0 index.js lib examples"
+    "lint": "eslint --max-warnings=0 index.js lib examples test"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -28,6 +28,7 @@
   "devDependencies": {
     "express": "^4.16.2",
     "eslint": "^3.19.0",
+    "js-sha512": "^0.7.1",
     "mocha": "^3.5.0"
   },
   "dependencies": {
