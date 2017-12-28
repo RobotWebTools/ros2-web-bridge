@@ -18,39 +18,56 @@ const rclnodejs = require('rclnodejs');
 const {Server} = require('ws');
 const NodeManager = require('./lib/node_manager.js');
 const Bridge = require('./lib/bridge.js');
-const debug = require('debug')('ros2bridge:index');
+const debug = require('debug')('ros2-web-bridge:index');
 
 function createServer(options) {
   options = options || {};
   options.port = options.port || 9090;
+  let server = new Server({port: options.port});
 
   return rclnodejs.init().then(() => {
-    let node = rclnodejs.createNode('ros2bridge_node');
+    let node = rclnodejs.createNode('ros2_web_bridge');
     let nodeManager = new NodeManager(node);
     let bridgeMap = new Map();
-    let server = new Server({port: options.port});
+
+    function closeAllBridges() {
+      bridgeMap.forEach((bridge, bridgeId) => {
+        bridge.close();
+      });
+    }
 
     server.on('connection', (ws) => {
       let bridge = new Bridge(nodeManager, ws);
-      bridgeMap.set(bridge.bridgeId, {ws: ws, bridge: bridge});
+      bridgeMap.set(bridge.bridgeId, bridge);
 
-      ws.on('message', (message) => {
-        bridge.receiveMessage(message);
+      bridge.on('error', (error) => {
+        let bridge = error.bridge;
+        if (bridge) {
+          debug(`Error happened, the bridge ${error.bridge.bridgeId} will be closed.`);
+          bridge.close();
+          bridgeMap.delete(bridge.bridgeId);
+        } else {
+          debug(`Unknown error happened: ${error}.`);
+        }
       });
 
-      ws.on('close', () => {
-        let bridge = bridgeMap.get(ws);
-        bridgeMap.delete(ws);
-        debug('disconnected');
+      bridge.on('close', (bridgeId) => {
+        bridgeMap.delete(bridgeId);
       });
     });
 
     server.on('error', (error) => {
-      nodeManager.shutdown();
-      debug('WebSocket error: ' + error);
+      closeAllBridges();
+      rclnodejs.shutdown();
+      debug(`WebSocket server error: ${error}, the module will be terminated.`);
     });
 
     rclnodejs.spin(node);
+    debug('The ros2-web-bridge has started.');
+  }).catch(error => {
+    debug(`Unknown error happened: ${error}, the module will be terminated.`);
+    server.close();
+    rclnodejs.shutdown();
   });
 }
 
