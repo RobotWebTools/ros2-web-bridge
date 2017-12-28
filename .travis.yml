@@ -3,7 +3,7 @@ sudo: required
 language: python
 branches:
   only:
-    - master
+    #- master
     - develop
 addons:
   hosts:
