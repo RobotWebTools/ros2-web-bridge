@@ -1,16 +1,50 @@
-services:
-  - docker
-
+dist: trusty
 sudo: required
-
+language: python
 branches:
   only:
-  - develop
-  - master
-
+    - master
+addons:
+  hosts:
+    - web-platform.test
+    - www.web-platform.test
+    - www1.web-platform.test
+    - www2.web-platform.test
+    - xn--n8j6ds53lwwkrqhv28a.web-platform.test
+    - xn--lve-6lad.web-platform.test
+  jwt:
+    secure: N9lvgkqUPtFlz6Vpa6qTPFhymEsDCsbaCsT64/hj3vlHRxK94r5+ugVJ3zm99zC0q2j1ish8yJC7mN/W4wRfBE4sAwmdxrlowxF1DDGCkaLE9i/GWW92s0fBVGJmXLh8kwNkQ31hMOsaGfHIMpeLFS7Se741te7YqsHIzmBCdQs=
 before_install:
-  - sudo docker pull ubuntu:xenial
-  - sudo docker build -t rcldocker .
+  - . ./tools/ci/before_install.sh
+install:
+  - ./tools/ci/install.sh
+env:  # required at the top-level for allow_failures to work below
+  global:
+    - SAUCE_USERNAME=w3c-ttwf
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      sudo: required
+      python: "2.7"
+      addons:
+        apt:
+          packages:
+            - libappindicator1
+            - fonts-liberation
+      env:
+        - secure: "YTSXPwI0DyCA1GhYrLT9KMEV6b7QQKuEeaQgeFDP38OTzJ1+cIj3CC4SRNqbnJ/6SJwPGcdqSxLuV8m4e5HFFnyCcQnJe6h8EMsTehZ7W3j/fP9UYrJqYqvGpe3Vj3xblO5pwBYmq7sg3jAmmuCgAgOW6VGf7cRMucrsmFeo7VM="
+        - JOB=stability SCRIPT=tools/ci/ci_stability.sh PRODUCT=chrome:unstable
+#  allow_failures:
+#    - env:
+#        - secure: "YTSXPwI0DyCA1GhYrLT9KMEV6b7QQKuEeaQgeFDP38OTzJ1+cIj3CC4SRNqbnJ/6SJwPGcdqSxLuV8m4e5HFFnyCcQnJe6h8EMsTehZ7W3j/fP9UYrJqYqvGpe3Vj3xblO5pwBYmq7sg3jAmmuCgAgOW6VGf7cRMucrsmFeo7VM="
+#        - JOB=stability SCRIPT=tools/ci/ci_stability.sh PRODUCT=chrome:unstable
 
 script:
-  - sudo docker run -v $(pwd):/root/ros2bridge_suite-experiment --rm rcldocker bash -i -c 'cd /root/ros2bridge_suite-experiment && npm install --unsafe-perm && npm run lint'
+  - ./tools/ci/run.sh
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $HOME/meta
+notifications:
+  webhooks: https://pulls.web-platform-tests.org/api/build
