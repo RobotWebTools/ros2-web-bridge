@@ -1,10 +1,8 @@
 #!/bin/bash
 set -e
 
-GIT_STATUS=$(git status)
-#GIT_PARAM=$(git rev-parse HEAD)
-
-if [[ $(./wpt test-jobs --includes $JOB; echo $?) -eq 0 ]]; then
+#if [[ $(./wpt test-jobs --includes $JOB; echo $?) -eq 0 ]]; then
+if [[ 0 -eq 0 ]]; then
     export RUN_JOB=1
     git submodule update --init --recursive 2>&1
     export DISPLAY=:99.0
