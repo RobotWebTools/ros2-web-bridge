@@ -15,9 +15,13 @@
 'use strict';
 
 const assert = require('assert');
-const rclnodejs = require('rclnodejs');
 const rosauth = require('../lib/rosauth.js');
 const {sha512} = require('js-sha512');
+
+function getJavaScriptTime() {
+  const t = new Date().getTime();
+  return {sec: Math.floor(t / 1000), nanosec: t % 1000};
+}
 
 describe('Test rosauth module internally/directly', function() {
   this.timeout(60 * 1000);
@@ -30,7 +34,7 @@ describe('Test rosauth module internally/directly', function() {
   });
 
   it('Test authenticate() method directly, correct MAC', function() {
-    const t = rclnodejs.rosClockGetNow();
+    const t = getJavaScriptTime();
     let msg = {
       mac: '',
       client: '192.168.1.101',
@@ -48,7 +52,7 @@ describe('Test rosauth module internally/directly', function() {
   });
 
   it('Test authenticate() method directly, no MAC', function() {
-    const t = rclnodejs.rosClockGetNow();
+    const t = getJavaScriptTime();
     let msg = {
       mac: '',
       client: '192.168.1.101',
@@ -63,7 +67,7 @@ describe('Test rosauth module internally/directly', function() {
   });
 
   it('Test authenticate() method directly, wrong MAC', function() {
-    const t = rclnodejs.rosClockGetNow();
+    const t = getJavaScriptTime();
     let msg = {
       mac: '',
       client: '192.168.1.101',
@@ -103,10 +107,10 @@ describe('Test rosauth module internally/directly', function() {
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: 10, nanosecDeltaEnd: 1000 * 1000 * 1000},
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: 10, nanosecDeltaEnd: Number.MAX_VALUE},
 
-    {secDelta: -rclnodejs.rosClockGetNow().sec - 10, nanosecDelta: 0, secDeltaEnd: 10, nanosecDeltaEnd: 0},
+    {secDelta: -getJavaScriptTime().sec - 10, nanosecDelta: 0, secDeltaEnd: 10, nanosecDeltaEnd: 0},
     {secDelta: -Number.MAX_VALUE, nanosecDelta: 0, secDeltaEnd: 10, nanosecDeltaEnd: 0},
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: -Number.MAX_VALUE, nanosecDeltaEnd: 0},
-    {secDelta: 0, nanosecDelta: 0, secDeltaEnd: -rclnodejs.rosClockGetNow().sec - 10, nanosecDeltaEnd: 0},
+    {secDelta: 0, nanosecDelta: 0, secDeltaEnd: -getJavaScriptTime().sec - 10, nanosecDeltaEnd: 0},
 
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: -0, nanosecDeltaEnd: 0},
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: -1, nanosecDeltaEnd: 0},
@@ -126,7 +130,7 @@ describe('Test rosauth module internally/directly', function() {
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: 0, nanosecDeltaEnd: -3000},
   ].forEach((testData, index) => {
     it('Test authenticate() method directly, correct MAC, wrong timestamp, case#' + index, function() {
-      const t = rclnodejs.rosClockGetNow();
+      const t = getJavaScriptTime();
       let msg = {
         mac: '',
         client: '192.168.1.101',
@@ -162,7 +166,7 @@ describe('Test rosauth module internally/directly', function() {
     {secDelta: 0, nanosecDelta: 0, secDeltaEnd: Number.MAX_VALUE, nanosecDeltaEnd: 0},
   ].forEach((testData, index) => {
     it('Test authenticate() method directly, correct MAC, correct timestamp, case#' + index, function() {
-      const t = rclnodejs.rosClockGetNow();
+      const t = getJavaScriptTime();
       let msg = {
         mac: '',
         client: '192.168.1.101',
