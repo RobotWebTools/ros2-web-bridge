@@ -15,8 +15,6 @@ addons:
     - xn--lve-6lad.web-platform.test
   jwt:
     secure: N9lvgkqUPtFlz6Vpa6qTPFhymEsDCsbaCsT64/hj3vlHRxK94r5+ugVJ3zm99zC0q2j1ish8yJC7mN/W4wRfBE4sAwmdxrlowxF1DDGCkaLE9i/GWW92s0fBVGJmXLh8kwNkQ31hMOsaGfHIMpeLFS7Se741te7YqsHIzmBCdQs=
-before_install:
-  - . ./tools/ci/before_install.sh
 install:
   - ./tools/ci/install.sh
 env:  # required at the top-level for allow_failures to work below
