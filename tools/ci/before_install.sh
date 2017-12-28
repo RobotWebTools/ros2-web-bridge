@@ -3,6 +3,7 @@ set -e
 
 #GIT_STATUS=$(git status)
 #GIT_PARAM=$(git rev-parse HEAD)
+echo $(./wpt test-jobs --includes $JOB)
 
 if [[ $(./wpt test-jobs --includes $JOB; echo $?) -eq 0 ]]; then
     export RUN_JOB=1
