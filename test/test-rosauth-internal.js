@@ -20,7 +20,7 @@ const {sha512} = require('js-sha512');
 
 function getJavaScriptTime() {
   const t = new Date().getTime();
-  return {sec: Math.floor(t / 1000), nanosec: t % 1000};
+  return {sec: Math.floor(t / 1000), nanosec: (t % 1000) * 1000 * 1000};
 }
 
 describe('Test rosauth module internally/directly', function() {
