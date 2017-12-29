@@ -18,7 +18,7 @@ A client is a program that communicates with ros2-web-bridge using its JSON API.
 npm install
 ```
 
-## Examples
+## Run Examples
 
 1.Start `ros2-web-bridge` module:
 
@@ -36,6 +36,28 @@ cd examples && node index.js
 
 ``` bash
 http://localhost:3000/html/publisher.html
+```
+
+## Known Issues
+
+For the latest release of roslibjs ([0.19.0](https://github.com/RobotWebTools/roslibjs/releases/tag/0.19.0)), when sending command `call_service` to request the service, the type of service is not included which is a necessary parameter for ROS 2.0. So you have to transfer both the request and the type of service through `args`, please reference the code below:
+
+```JavaScript
+let addTwoInts = new ROSLIB.Service({
+  ros : ros,
+  name : '/add_two_ints',
+  serviceType : 'example_interfaces/AddTwoInts'
+});
+
+let request = new ROSLIB.ServiceRequest({
+  a : 1,
+  b : 2
+});
+
+let args = {request: request, type: 'example_interfaces/AddTwoInts'};
+addTwoInts.callService(args, function(result) {
+  console.log(`Receive result: ${result.sum}`);
+});
 ```
 
 ## License
