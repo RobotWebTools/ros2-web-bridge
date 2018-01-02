@@ -4,15 +4,27 @@
 
 ## Server Implementations of the rosbridge v2 Protocol
 
-ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTools/rclnodejs) client, provides a JSON interface to [ROS 2.0](https://github.com/ros2/ros2/wiki) by adopting the [rosbridge v2 protocol](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md). The bridge can process commands through JSON tuneled on WebSockets.
+ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTools/rclnodejs) client, provides a JSON interface to [ROS 2.0](https://github.com/ros2/ros2/wiki) by adopting the [rosbridge v2 protocol](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md). The bridge can process commands through JSON tuneled over WebSockets.
 
-## Clients
+## Supported Clients
 
 A client is a program that communicates with ros2-web-bridge using its JSON API. Clients include:
 
 * [roslibjs](https://github.com/RobotWebTools/roslibjs) - A JavaScript API, which communicates with ros2-web-bridge over WebSockets.
 
 ## Install
+
+1.Prepare for ROS2
+
+Please reference the [wiki](https://github.com/ros2/ros2/wiki/Installation) to install ROS2.
+
+2.Install `Node.js`
+You can install Node.js:
+
+* Download from Node.js offical [website](https://nodejs.org/en/), and install it.
+* Use the Node Version Manager ([nvm](https://github.com/creationix/nvm)) to install it.
+
+3.Install dependencies
 
 ```javascript
 npm install
@@ -59,6 +71,11 @@ addTwoInts.callService(args, function(result) {
   console.log(`Receive result: ${result.sum}`);
 });
 ```
+
+## Contributing
+
+If you want to contribute code to this project, first you need to fork the
+project. The next step is to send a pull request (PR) for review. The PR will be reviewed by the project team members. Once you have gained "Look Good To Me (LGTM)", the project maintainers will merge the PR.
 
 ## License
 
