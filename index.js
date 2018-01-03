@@ -16,7 +16,6 @@
 
 const rclnodejs = require('rclnodejs');
 const {Server} = require('ws');
-const NodeManager = require('./lib/node_manager.js');
 const Bridge = require('./lib/bridge.js');
 const debug = require('debug')('ros2-web-bridge:index');
 
@@ -27,7 +26,6 @@ function createServer(options) {
 
   return rclnodejs.init().then(() => {
     let node = rclnodejs.createNode('ros2_web_bridge');
-    let nodeManager = new NodeManager(node);
     let bridgeMap = new Map();
 
     function closeAllBridges() {
@@ -37,7 +35,7 @@ function createServer(options) {
     }
 
     server.on('connection', (ws) => {
-      let bridge = new Bridge(nodeManager, ws);
+      let bridge = new Bridge(node, ws);
       bridgeMap.set(bridge.bridgeId, bridge);
 
       bridge.on('error', (error) => {
