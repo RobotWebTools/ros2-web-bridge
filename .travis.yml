@@ -13,8 +13,6 @@ addons:
     - www2.web-platform.test
     - xn--n8j6ds53lwwkrqhv28a.web-platform.test
     - xn--lve-6lad.web-platform.test
-  jwt:
-    secure: N9lvgkqUPtFlz6Vpa6qTPFhymEsDCsbaCsT64/hj3vlHRxK94r5+ugVJ3zm99zC0q2j1ish8yJC7mN/W4wRfBE4sAwmdxrlowxF1DDGCkaLE9i/GWW92s0fBVGJmXLh8kwNkQ31hMOsaGfHIMpeLFS7Se741te7YqsHIzmBCdQs=
 install:
   - ./tools/ci/install.sh
 env:  # required at the top-level for allow_failures to work below
@@ -32,7 +30,6 @@ matrix:
             - libappindicator1
             - fonts-liberation
       env:
-        - secure: "YTSXPwI0DyCA1GhYrLT9KMEV6b7QQKuEeaQgeFDP38OTzJ1+cIj3CC4SRNqbnJ/6SJwPGcdqSxLuV8m4e5HFFnyCcQnJe6h8EMsTehZ7W3j/fP9UYrJqYqvGpe3Vj3xblO5pwBYmq7sg3jAmmuCgAgOW6VGf7cRMucrsmFeo7VM="
         - JOB=stability SCRIPT=tools/ci/ci_stability.sh PRODUCT=chrome:unstable
 #  allow_failures:
 #    - env:
