@@ -15,7 +15,7 @@
 'use strict';
 
 const assert = require('assert');
-const rosauth = require('../lib/rosauth.js');
+const rosauth = require('../../lib/rosauth.js');
 const {sha512} = require('js-sha512');
 
 function getJavaScriptTime() {
