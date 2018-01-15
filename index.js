@@ -62,6 +62,7 @@ function createServer(options) {
 
     rclnodejs.spin(node);
     debug('The ros2-web-bridge has started.');
+    console.log(`The web socket server started on ws://localhost:${options.port}`);
   }).catch(error => {
     debug(`Unknown error happened: ${error}, the module will be terminated.`);
     server.close();
