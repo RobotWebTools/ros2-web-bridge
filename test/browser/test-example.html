@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example tests with testharness.js for Travis CI</title>
+  <script src="resources/testharness.js"></script>
+  <script src="resources/testharnessreport.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/0.19.0/roslib.js"></script>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic',
+        messageType : 'std_msgs/String'
+      });
+
+      assert_true(true, "Nothing wrong happened.");
+    }, "Simple test");
+
+  </script>
+</body>
+</html>

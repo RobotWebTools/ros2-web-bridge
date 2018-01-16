@@ -13,4 +13,4 @@ before_install:
   - sudo docker build -t rcldocker .
 
 script:
-  - sudo docker run -v $(pwd):/root/ros2-web-bridge --rm rcldocker bash -i -c 'cd /root/ros2-web-bridge && npm install --unsafe-perm && npm run lint'
+  - sudo docker run -v $(pwd):/root/ros2-web-bridge --rm rcldocker bash -i -c 'cd /root/ros2-web-bridge && npm install --unsafe-perm && npm run lint && npm run ci'

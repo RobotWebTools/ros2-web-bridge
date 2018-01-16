@@ -13,8 +13,10 @@
     "rosbridge": "bin/rosbridge.js"
   },
   "scripts": {
-    "test": "mocha",
-    "lint": "eslint --max-warnings=0 index.js lib examples test"
+    "test": "mocha test/nodejs",
+    "browser": "node test/browser/test-html.js test-example.html",
+    "lint": "eslint --max-warnings=0 index.js lib examples test",
+    "ci": "npm run test && npm run browser"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -34,8 +36,10 @@
   "dependencies": {
     "commander": "^2.12.2",
     "debug": "^3.1.0",
+    "jsdom": "^11.5.1",
+    "puppeteer": "^0.13.0",
     "rclnodejs": "^0.x",
-    "ws": "^3.3.2",
-    "uuid":"^3.1.0"
+    "uuid": "^3.1.0",
+    "ws": "^3.3.2"
   }
 }
