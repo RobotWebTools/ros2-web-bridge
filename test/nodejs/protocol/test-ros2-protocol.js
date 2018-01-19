@@ -21,7 +21,7 @@ const WebSocket = require('ws');
 
 var rosbridge = path.resolve(__dirname, '../../../bin/rosbridge.js');
 
-describe('ROS2 protocol testing', function () {
+describe('ROS2 protocol testing', function() {
   var webSocketServer;
   this.timeout(60 * 1000);
 
