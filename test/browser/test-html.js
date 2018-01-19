@@ -19,44 +19,44 @@ const fs = require('fs');
 const child = require('child_process');
 const puppeteer = require('puppeteer');
 const jsdom = require('jsdom');
+const async = require('async');
 
 var server = child.fork(`${__dirname}/server.js`, {cwd: `${__dirname}`});
-// var htmlTests = fs.readdirSync(__dirname).filter((file) => {
-//   return (file.startsWith('test-')) && (file.endsWith('.js'));
-// });
+var htmlTests = require('./html_list.json').htmls;
 
 var testResults = [];
-(async (html) => {
-    const browser = await puppeteer.launch({args: ['--no-sandbox']});
-    const page = await browser.newPage();
-    await page.setViewport({width: 1280, height: 960});
-    await page.goto('http://127.0.0.1:8080/' + html, {waitUntil: 'load'});
+async.each(htmlTests, async function (html, callback) {
+  const browser = await puppeteer.launch({args: ['--no-sandbox']});
+  const page = await browser.newPage();
+  await page.setViewport({width: 1280, height: 960});
+  await page.goto('http://127.0.0.1:8080/' + html, {waitUntil: 'load'});
 
-    var results = await page.evaluate(() => {
-        testCasesResult = document.querySelector('#results').outerHTML;
-        return testCasesResult;
-    });
+  var results = await page.evaluate(() => {
+    testCasesResult = document.querySelector('#results').outerHTML;
+    return testCasesResult;
+  });
 
-    var dom = new jsdom.JSDOM(results, { contentType: 'text/html'});
-    for (let i = 0; i < dom.window.document.querySelector('tbody').rows.length; i++) {
-        var testResult = {};
-        testResult['caseId'] = dom.window.document.querySelector('tbody').rows[i].cells[1].textContent;
-        testResult['result'] = dom.window.document.querySelector('tbody').rows[i].cells[0].textContent;
-        testResult['message'] = dom.window.document.querySelector('tbody').rows[i].cells[2].textContent;
+  var dom = new jsdom.JSDOM(results, { contentType: 'text/html'});
+  for (let i = 0; i < dom.window.document.querySelector('tbody').rows.length; i++) {
+    var testResult = {};
+    testResult['caseId'] = dom.window.document.querySelector('tbody').rows[i].cells[1].textContent;
+    testResult['result'] = dom.window.document.querySelector('tbody').rows[i].cells[0].textContent;
+    testResult['message'] = dom.window.document.querySelector('tbody').rows[i].cells[2].textContent;
 
-        testResult['component'] = 'roslibjs';
-        testResult['purpose'] = '';
-        testResult['type'] = 'auto';
-        testResult['comment'] = '';
-        testResult['suite'] = html;
+    testResult['component'] = 'roslibjs';
+    testResult['purpose'] = '';
+    testResult['type'] = 'auto';
+    testResult['comment'] = '';
+    testResult['suite'] = html;
 
-        testResults.push(testResult);
-    }
+    testResults.push(testResult);
+  }
 
-    console.log(testResults);
-    browser.close();
-    server.kill('SIGINT');
-    testResults.forEach((testResult) => {
-      assert.deepStrictEqual(testResult['result'], 'Pass');
-    });
-})(process.argv[2]);
+  await browser.close();
+}, function () {
+  server.kill('SIGINT');
+  console.log(testResults);
+  testResults.forEach((testResult) => {
+    assert.deepStrictEqual(testResult['result'], 'Pass');
+  });    
+});

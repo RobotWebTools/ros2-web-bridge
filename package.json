@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "mocha test/nodejs",
-    "browser": "node test/browser/test-html.js test-example.html",
+    "wsserver": "node bin/rosbridge.js",
+    "browser": "node test/browser/test-html.js",
     "lint": "eslint --max-warnings=0 index.js lib examples test",
     "ci": "npm run test && npm run browser"
   },
@@ -28,10 +29,13 @@
     "Kenny Yuan <kaining.yuan@intel.com>"
   ],
   "devDependencies": {
+    "async": "^2.6.0",
     "express": "^4.16.2",
     "eslint": "^3.19.0",
     "js-sha512": "^0.7.1",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "jsdom": "^11.5.1",
+    "puppeteer": "^0.13.0"
   },
   "dependencies": {
     "commander": "^2.12.2",
