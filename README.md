@@ -50,9 +50,21 @@ cd examples && node index.js
 http://localhost:3000/html/publisher.html
 ```
 
+## Not support `op`
+
+Some experimental operations defined by rosbridge v2.0 protocol specification are not supported by ros2-web-bridge now, please check out the list:
+
+* [fragment](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#311-fragmentation--fragment--experimental)
+* [png](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#312-png-compression--png--experimental)
+* [status](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#322-status-message--status--experimental)
+
+and the authentication
+
+* [auth](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#331-authenticate--auth-)
+
 ## Known Issues
 
-For the latest release of roslibjs ([0.19.0](https://github.com/RobotWebTools/roslibjs/releases/tag/0.19.0)), when sending command `call_service` to request the service, the type of service is not included which is a necessary parameter for ROS 2.0. So you have to transfer both the request and the type of service through `args`, please reference the code below:
+For the latest release of [roslibjs](https://static.robotwebtools.org/roslibjs/current/roslib.js), when sending command `call_service` to request the service, the type of service is not included which is a necessary parameter for ROS 2.0. So you have to transfer both the request and the type of service through `args`, please reference the code below:
 
 ```JavaScript
 let addTwoInts = new ROSLIB.Service({
