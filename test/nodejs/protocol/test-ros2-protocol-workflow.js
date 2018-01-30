@@ -15,27 +15,9 @@
 'use strict';
 
 const assert = require('assert');
-const child = require('child_process');
-const path = require('path');
 const WebSocket = require('ws');
 
-var rosbridge = path.resolve(__dirname, '../../../bin/rosbridge.js');
-
-describe('ROS2 protocol testing: sanity', function() {
-  var webSocketServer;
-  this.timeout(60 * 1000);
-
-  before(function(done) {
-    webSocketServer = child.fork(rosbridge, {silent: true});
-    webSocketServer.stdout.on('data', function(data) {
-      done();
-    });
-  });
-
-  after(function() {
-    webSocketServer.kill('SIGTERM');
-  });
-
+module.exports = function() {
   it('Protocol testing general workflow', function() {
     return new Promise((resolve, reject) => {
       let ws = new WebSocket('ws://127.0.0.1:9090');
@@ -59,4 +41,4 @@ describe('ROS2 protocol testing: sanity', function() {
       });
     });
   });
-});
+};
