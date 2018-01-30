@@ -17,7 +17,8 @@
     "wsserver": "node bin/rosbridge.js",
     "browser": "node test/browser/test-html.js",
     "lint": "eslint --max-warnings=0 index.js lib examples test",
-    "ci": "npm run test && npm run browser"
+    "protocol": "mocha test/nodejs/protocol/test-*.js",
+    "ci": "npm run test && npm run browser && npm run protocol"
   },
   "license": "Apache-2.0",
   "repository": {
