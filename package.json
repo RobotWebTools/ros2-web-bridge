@@ -13,7 +13,7 @@
     "rosbridge": "bin/rosbridge.js"
   },
   "scripts": {
-    "test": "mocha test/nodejs/*",
+    "test": "mocha test/nodejs/",
     "wsserver": "node bin/rosbridge.js",
     "browser": "node test/browser/test-html.js",
     "lint": "eslint --max-warnings=0 index.js lib examples test",
