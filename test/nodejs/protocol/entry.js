@@ -21,7 +21,7 @@ const WebSocket = require('ws');
 
 var rosbridge = path.resolve(__dirname, '../../../bin/rosbridge.js');
 
-describe('ROS2 protocol testing', function() {
+describe('Rosbridge v2.0 protocol testing', function() {
   var webSocketServer;
   this.timeout(60 * 1000);
 
@@ -33,26 +33,19 @@ describe('ROS2 protocol testing', function() {
   });
 
   after(function() {
-    webSocketServer.kill('SIGINT');
+    webSocketServer.kill();
   });
 
-  it('Protocol testing workflow', function() {
-    return new Promise((resolve, reject) => {
-      var ws = new WebSocket('ws://127.0.0.1:9090');
-      ws.on('open', function() {
-        const msg = '{"op":"publish", \
-                      "id":"publish:/example_topic:2", \
-                      "topic":"/example_topic", \
-                      "msg":{"data":"hello from ros2bridge 0"}, \
-                      "latch":false}';
-        ws.send(msg);
-      });
-      ws.on('message', function(data) {
-        var response = JSON.parse(data);
-        assert.deepStrictEqual(response['op'], 'set_level');
-        assert.deepStrictEqual(response['level'], 'error');
-        resolve();
-      });
-    });
-  });  
+  describe('sanity', function() {
+    require('./test-ros2-protocol-workflow.js')();
+  });
+
+  describe('advertise operation', function() {
+    require('./test-advertise.js')();
+  });
+
+  describe('unadvertise operation', function() {
+    require('./test-unadvertise.js')();
+  });
 });
+
