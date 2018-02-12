@@ -24,6 +24,12 @@ function createServer(options) {
   options.port = options.port || 9090;
   let server = new Server({port: options.port});
 
+  process.on('exit', () => {
+    debug('Application will exit.');
+    // Closing the server will trigger the individual connections to be closed and cleaned.
+    server.close();
+  });
+
   return rclnodejs.init().then(() => {
     let node = rclnodejs.createNode('ros2_web_bridge');
     let bridgeMap = new Map();
