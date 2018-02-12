@@ -1,6 +1,6 @@
 {
   "name": "ros2-web-bridge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bridge the web clients to ROS2.0 by a JSON interface",
   "main": "index.js",
   "keywords": [
@@ -26,7 +26,9 @@
   },
   "authors": [
     "Minggang Wang <minggang.wang@intel.com>",
-    "Kenny Yuan <kaining.yuan@intel.com>"
+    "Kenny Yuan <kaining.yuan@intel.com>",
+    "Wanming Lin <wanming.lin@intel.com>",
+    "Zhong Qiu <zhongx.qiu@intel.com>"
   ],
   "devDependencies": {
     "async": "^2.6.0",
