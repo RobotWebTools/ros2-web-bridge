@@ -44,12 +44,20 @@ describe('Rosbridge v2.0 protocol testing', function() {
     require('./test-advertise.js')();
   });
 
+  describe('advertise topic with message types', function() {
+    require('./test-advertise-msg.js')();
+  });
+
   describe('unadvertise operation', function() {
     require('./test-unadvertise.js')();
   });
 
   describe('publish operation', function() {
     require('./test-publish.js')();
+  });
+
+  describe('publish message with types', function() {
+    require('./test-publish-msg.js')();
   });
 });
 
