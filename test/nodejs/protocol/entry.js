@@ -47,5 +47,9 @@ describe('Rosbridge v2.0 protocol testing', function() {
   describe('unadvertise operation', function() {
     require('./test-unadvertise.js')();
   });
+
+  describe('publish operation', function() {
+    require('./test-publish.js')();
+  });
 });
 
