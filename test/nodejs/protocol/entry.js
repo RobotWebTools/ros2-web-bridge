@@ -59,5 +59,9 @@ describe('Rosbridge v2.0 protocol testing', function() {
   describe('publish message with types', function() {
     require('./test-publish-msg.js')();
   });
+
+  describe('subscribe operation', function() {
+    require('./test-subscribe.js')();
+  });
 });
 
