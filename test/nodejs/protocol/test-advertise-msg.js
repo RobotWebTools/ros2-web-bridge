@@ -18,113 +18,80 @@ const assert = require('assert');
 const WebSocket = require('ws');
 
 module.exports = function() {
+  let finalStatus = 'none';
   let testCasesData = [
     {
       title: 'advertise topic with message type: Bool',
-      advertiseMsg: {op: 'advertise', id: 'advertise_bool', topic: 'advertise_bool_topic', type: 'std_msgs/Bool'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_bool', topic: 'advertise_bool_topic', type: 'std_msgs/Bool'}
     },
     {
       title: 'advertise topic with message type: Byte',
-      advertiseMsg: {op: 'advertise', id: 'advertise_byte', topic: 'advertise_byte_topic', type: 'std_msgs/Byte'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_byte', topic: 'advertise_byte_topic', type: 'std_msgs/Byte'}
     },
     {
       title: 'advertise topic with message type: Char',
-      advertiseMsg: {op: 'advertise', id: 'advertise_char', topic: 'advertise_char_topic', type: 'std_msgs/Char'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_char', topic: 'advertise_char_topic', type: 'std_msgs/Char'}
     },
     {
       title: 'advertise topic with message type: String',
-      advertiseMsg: {op: 'advertise', id: 'advertise_string', topic: 'advertise_string_topic', type: 'std_msgs/String'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_string', topic: 'advertise_string_topic', type: 'std_msgs/String'}
     },
     {
       title: 'advertise topic with message type: Int8',
-      advertiseMsg: {op: 'advertise', id: 'advertise_int8', topic: 'advertise_int8_topic', type: 'std_msgs/Int8'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_int8', topic: 'advertise_int8_topic', type: 'std_msgs/Int8'}
     },
     {
       title: 'advertise topic with message type: UInt8',
-      advertiseMsg: {op: 'advertise', id: 'advertise_uint8', topic: 'advertise_uint8_topic', type: 'std_msgs/UInt8'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_uint8', topic: 'advertise_uint8_topic', type: 'std_msgs/UInt8'}
     },
     {
       title: 'advertise topic with message type: Int16',
-      advertiseMsg: {op: 'advertise', id: 'advertise_int16', topic: 'advertise_int16_topic', type: 'std_msgs/Int16'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_int16', topic: 'advertise_int16_topic', type: 'std_msgs/Int16'}
     },
     {
       title: 'advertise topic with message type: UInt16',
-      advertiseMsg: {op: 'advertise', id: 'advertise_uint16', topic: 'advertise_uint16_topic', type: 'std_msgs/UInt16'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_uint16', topic: 'advertise_uint16_topic', type: 'std_msgs/UInt16'}
     },
     {
       title: 'advertise topic with message type: Int32',
-      advertiseMsg: {op: 'advertise', id: 'advertise_int32', topic: 'advertise_int32_topic', type: 'std_msgs/Int32'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_int32', topic: 'advertise_int32_topic', type: 'std_msgs/Int32'}
     },
     {
       title: 'advertise topic with message type: UInt32',
-      advertiseMsg: {op: 'advertise', id: 'advertise_uint32', topic: 'advertise_uint32_topic', type: 'std_msgs/UInt32'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_uint32', topic: 'advertise_uint32_topic', type: 'std_msgs/UInt32'}
     },
     {
       title: 'advertise topic with message type: Int64',
-      advertiseMsg: {op: 'advertise', id: 'advertise_int64', topic: 'advertise_int64_topic', type: 'std_msgs/Int64'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_int64', topic: 'advertise_int64_topic', type: 'std_msgs/Int64'}
     },
     {
       title: 'advertise topic with message type: UInt64',
-      advertiseMsg: {op: 'advertise', id: 'advertise_uint64', topic: 'advertise_uint64_topic', type: 'std_msgs/UInt64'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_uint64', topic: 'advertise_uint64_topic', type: 'std_msgs/UInt64'}
     },
     {
       title: 'advertise topic with message type: Float32',
       advertiseMsg:
-        {op: 'advertise', id: 'advertise_float32', topic: 'advertise_float32_topic', type: 'std_msgs/Float32'},
-      opCount: 1,
-      finalStatus: 'none'
+        {op: 'advertise', id: 'advertise_float32', topic: 'advertise_float32_topic', type: 'std_msgs/Float32'}
     },
     {
       title: 'advertise topic with message type: Float64',
       advertiseMsg:
-        {op: 'advertise', id: 'advertise_float64', topic: 'advertise_float64_topic', type: 'std_msgs/Float64'},
-      opCount: 1,
-      finalStatus: 'none'
+        {op: 'advertise', id: 'advertise_float64', topic: 'advertise_float64_topic', type: 'std_msgs/Float64'}
     },
     {
       title: 'advertise topic with message type: ColorRGBA',
       advertiseMsg:
-        {op: 'advertise', id: 'advertise_colorrgba', topic: 'advertise_colorrgba_topic', type: 'std_msgs/ColorRGBA'},
-      opCount: 1,
-      finalStatus: 'none'
+        {op: 'advertise', id: 'advertise_colorrgba', topic: 'advertise_colorrgba_topic', type: 'std_msgs/ColorRGBA'}
     },
     {
       title: 'advertise topic with message type: Header',
-      advertiseMsg: {op: 'advertise', id: 'advertise_header', topic: 'advertise_header_topic', type: 'std_msgs/Header'},
-      opCount: 1,
-      finalStatus: 'none'
+      advertiseMsg: {op: 'advertise', id: 'advertise_header', topic: 'advertise_header_topic', type: 'std_msgs/Header'}
     },
     {
       title: 'advertise topic with message type: JointState',
       advertiseMsg:
       { op: 'advertise', id: 'advertise_jointstate', 
-        topic: 'advertise_jointstate_topic', type: 'sensor_msgs/JointState'},
-      opCount: 1,
-      finalStatus: 'none'
+        topic: 'advertise_jointstate_topic', type: 'sensor_msgs/JointState'}
     }
   ];
 
@@ -138,7 +105,7 @@ module.exports = function() {
         });
         ws.on('message', function(data) {
           let response = JSON.parse(data);
-          assert.deepStrictEqual(response.level, testData.finalStatus);
+          assert.deepStrictEqual(response.level, finalStatus);
           ws.close();
           resolve();
         });
