@@ -22,41 +22,41 @@ const WebSocket = require('ws');
 module.exports = function() {
 
   let testCasesData = [
-    // {
-    //   title: 'subscribe positive case 1: full fields',
-    //   msg0: {op: 'subscribe', id: 'subscribe_id1', topic: 'subscribe_topic1', type: 'std_msgs/String',
-    //     throttle_rate: 0, queue_length: 0, fragment_size: 1, compression: 'none'},
-    //   msg1: {op: 'advertise', id: 'advertise_setup_id1', topic: 'subscribe_topic1', type: 'std_msgs/String'},
-    //   msg2: {op: 'publish', id: 'publish_setup_id1', topic: 'subscribe_topic1', msg: {data: 'subscribe operation'}},
-    // },
-    // {
-    //   title: 'subscribe positive case 2: no field id',
-    //   msg0: {op: 'subscribe', topic: 'subscribe_topic2', type: 'std_msgs/String',
-    //     throttle_rate: 0, queue_length: 0, fragment_size: 1, compression: 'none'},
-    //   msg1: {op: 'advertise', id: 'advertise_setup_id2', topic: 'subscribe_topic2', type: 'std_msgs/String'},
-    //   msg2: {op: 'publish', id: 'publish_setup_id2', topic: 'subscribe_topic2', msg: {data: 'subscribe operation'}},
-    // },
-    // {
-    //   title: 'subscribe positive case 3: no field throttle_rate',
-    //   msg0: {op: 'subscribe', id: 'subscribe_id3', topic: 'subscribe_topic3', type: 'std_msgs/String',
-    //     queue_length: 0, fragment_size: 1, compression: 'none'},
-    //   msg1: {op: 'advertise', id: 'advertise_setup_id3', topic: 'subscribe_topic3', type: 'std_msgs/String'},
-    //   msg2: {op: 'publish', id: 'publish_setup_id3', topic: 'subscribe_topic3', msg: {data: 'subscribe operation'}},
-    // },
-    // {
-    //   title: 'subscribe positive case 4: no field queue_length',
-    //   msg0: {op: 'subscribe', id: 'subscribe_id4', topic: 'subscribe_topic4', type: 'std_msgs/String',
-    //     throttle_rate: 0, fragment_size: 1, compression: 'none'},
-    //   msg1: {op: 'advertise', id: 'advertise_setup_id4', topic: 'subscribe_topic4', type: 'std_msgs/String'},
-    //   msg2: {op: 'publish', id: 'publish_setup_id4', topic: 'subscribe_topic4', msg: {data: 'subscribe operation'}},
-    // },
-    // {
-    //   title: 'subscribe positive case 5: no field fragment_size',
-    //   msg0: {op: 'subscribe', id: 'advertise_id5', topic: 'subscribe_topic5', type: 'std_msgs/String',
-    //     throttle_rate: 0, queue_length: 0, compression: 'none'},
-    //   msg1: {op: 'advertise', id: 'advertise_setup_id5', topic: 'subscribe_topic5', type: 'std_msgs/String'},
-    //   msg2: {op: 'publish', id: 'publish_setup_id5', topic: 'subscribe_topic5', msg: {data: 'subscribe operation'}},
-    // },
+    {
+      title: 'subscribe positive case 1: full fields',
+      msg0: {op: 'subscribe', id: 'subscribe_id1', topic: 'subscribe_topic1', type: 'std_msgs/String',
+        throttle_rate: 0, queue_length: 0, fragment_size: 1, compression: 'none'},
+      msg1: {op: 'advertise', id: 'advertise_setup_id1', topic: 'subscribe_topic1', type: 'std_msgs/String'},
+      msg2: {op: 'publish', id: 'publish_setup_id1', topic: 'subscribe_topic1', msg: {data: 'subscribe operation'}},
+    },
+    {
+      title: 'subscribe positive case 2: no field id',
+      msg0: {op: 'subscribe', topic: 'subscribe_topic2', type: 'std_msgs/String',
+        throttle_rate: 0, queue_length: 0, fragment_size: 1, compression: 'none'},
+      msg1: {op: 'advertise', id: 'advertise_setup_id2', topic: 'subscribe_topic2', type: 'std_msgs/String'},
+      msg2: {op: 'publish', id: 'publish_setup_id2', topic: 'subscribe_topic2', msg: {data: 'subscribe operation'}},
+    },
+    {
+      title: 'subscribe positive case 3: no field throttle_rate',
+      msg0: {op: 'subscribe', id: 'subscribe_id3', topic: 'subscribe_topic3', type: 'std_msgs/String',
+        queue_length: 0, fragment_size: 1, compression: 'none'},
+      msg1: {op: 'advertise', id: 'advertise_setup_id3', topic: 'subscribe_topic3', type: 'std_msgs/String'},
+      msg2: {op: 'publish', id: 'publish_setup_id3', topic: 'subscribe_topic3', msg: {data: 'subscribe operation'}},
+    },
+    {
+      title: 'subscribe positive case 4: no field queue_length',
+      msg0: {op: 'subscribe', id: 'subscribe_id4', topic: 'subscribe_topic4', type: 'std_msgs/String',
+        throttle_rate: 0, fragment_size: 1, compression: 'none'},
+      msg1: {op: 'advertise', id: 'advertise_setup_id4', topic: 'subscribe_topic4', type: 'std_msgs/String'},
+      msg2: {op: 'publish', id: 'publish_setup_id4', topic: 'subscribe_topic4', msg: {data: 'subscribe operation'}},
+    },
+    {
+      title: 'subscribe positive case 5: no field fragment_size',
+      msg0: {op: 'subscribe', id: 'advertise_id5', topic: 'subscribe_topic5', type: 'std_msgs/String',
+        throttle_rate: 0, queue_length: 0, compression: 'none'},
+      msg1: {op: 'advertise', id: 'advertise_setup_id5', topic: 'subscribe_topic5', type: 'std_msgs/String'},
+      msg2: {op: 'publish', id: 'publish_setup_id5', topic: 'subscribe_topic5', msg: {data: 'subscribe operation'}},
+    },
     {
       title: 'subscribe positive case 6: no field compression',
       msg0: {op: 'subscribe', id: 'subscribe_id6', topic: 'subscribe_topic6', type: 'std_msgs/String',
