@@ -63,5 +63,13 @@ describe('Rosbridge v2.0 protocol testing', function() {
   describe('subscribe operation', function() {
     require('./test-subscribe.js')();
   });
+
+  describe('subscribe message with types', function() {
+    require('./test-subscribe-msg.js')();
+  });
+
+  describe('unsubscribe operation', function() {
+    require('./test-unsubscribe.js')();
+  });
 });
 
