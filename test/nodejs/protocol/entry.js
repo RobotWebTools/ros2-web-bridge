@@ -60,6 +60,10 @@ describe('Rosbridge v2.0 protocol testing', function() {
     require('./test-publish-msg.js')();
   });
 
+  describe('call_service operation', function() {
+    require('./test-call-service.js')();
+  });
+
   describe('advertise_service operation', function() {
     require('./test-advertise-service.js')();
   });  
