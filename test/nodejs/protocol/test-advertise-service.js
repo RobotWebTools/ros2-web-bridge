@@ -51,7 +51,14 @@ module.exports = function() {
         op: 'advertise_service', type: 'example_interfaces/AddTwoInts', service: '/add_two_ints'},
       opCount: 1,
       finalStatus: 'none'
-    },    
+    },
+    {
+      title: 'advertise_service positive case 3: ROS2 interface type format',
+      advertiseServiceMsg: {
+        op: 'advertise_service', type: 'example_interfaces/srv/AddTwoInts', service: 'add_two_ints'},
+      opCount: 1,
+      finalStatus: 'none'
+    },
     {
       title: 'advertise_service negative case 1: unknown type',
       advertiseServiceMsg: {

@@ -34,6 +34,13 @@ module.exports = function() {
       finalStatus: 'none'
     },
     {
+      title: 'publish positive case 3: ROS2 message type format',
+      advertiseMsg: {op: 'advertise', topic: 'publish_ros2_msg_topic', type: 'std_msgs/msg/String'},
+      publishMsg: {op: 'publish', topic: 'publish_ros2_msg_topic', msg: {data: 'hello world!'}},
+      opCount: 2,
+      finalStatus: 'none'
+    },
+    {
       title: 'publish negative case 1: topic not exist',
       publishMsg: {op: 'publish', id: 'publish_id3', topic: 'publish_topic3', msg: {data: 'Hello World!'}},
       opCount: 1,
