@@ -34,6 +34,14 @@ module.exports = function() {
       finalStatus: 'none'
     },
     {
+      title: 'unadvertise positive case 3: ROS2 message type format',
+      advertiseMsg: {op: 'advertise', id: 'advertise_ros2_msg_setup', topic: 'unadvertise_ros2_msg_topic',
+        type: 'std_msgs/msg/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_ros2_msg_setup', topic: 'unadvertise_ros2_msg_topic'},
+      opCount: 2,
+      finalStatus: 'none'
+    },
+    {
       title: 'unadvertise negative case 1',
       unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id3', topic: 'unadvertise_topic3'},
       opCount: 1,
