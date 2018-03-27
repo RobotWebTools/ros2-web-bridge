@@ -62,6 +62,10 @@ describe('Rosbridge v2.0 protocol testing', function() {
 
   describe('advertise_service operation', function() {
     require('./test-advertise-service.js')();
+  });
+
+  describe('service_response operation', function() {
+    require('./test-service-response.js')();
   });  
 });
 
