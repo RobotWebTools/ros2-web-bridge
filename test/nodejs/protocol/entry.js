@@ -60,6 +60,21 @@ describe('Rosbridge v2.0 protocol testing', function() {
     require('./test-publish-msg.js')();
   });
 
+  describe('subscribe operation', function() {
+    require('./test-subscribe.js')();
+  });
+
+  describe('subscribe message with types', function() {
+    require('./test-subscribe-msg.js')();
+  });
+
+  describe('unsubscribe operation', function() {
+    require('./test-unsubscribe.js')();
+  });
+  describe('call_service operation', function() {
+    require('./test-call-service.js')();
+  });
+
   describe('advertise_service operation', function() {
     require('./test-advertise-service.js')();
   });
@@ -75,5 +90,8 @@ describe('Rosbridge v2.0 protocol testing', function() {
   describe('fuzzing operations', function() {
     require('./test-op-neg.js')();
   });
+  describe('service_response operation', function() {
+    require('./test-service-response.js')();
+  });  
 });
 

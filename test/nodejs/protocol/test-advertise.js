@@ -39,6 +39,13 @@ module.exports = function() {
       finalStatus: 'none'
     },
     {
+      title: 'advertise positive case 4: ROS2 message type format',
+      advertiseMsg1: {
+        op: 'advertise', id: 'advertise_ros2_msg', topic: 'advertise_ros2_msg_topic', type: 'std_msgs/msg/Byte'},
+      opCount: 1,
+      finalStatus: 'none'
+    },    
+    {
       title: 'advertise negative case 1',
       advertiseMsg1: {op: 'advertise', id: 'advertise_id5', topic: 'advertise_topic5', type: 'std_msgs/String'},
       advertiseMsg2: {op: 'advertise', id: 'advertise_id6', topic: 'advertise_topic5', type: 'std_msgs/Char'},

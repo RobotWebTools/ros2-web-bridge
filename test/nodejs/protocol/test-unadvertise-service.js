@@ -49,7 +49,7 @@ module.exports = function() {
     {
       title: 'unadvertise_service positive case 2',
       advertiseServiceMsg: {
-        op: 'advertise_service', type: 'example_interfaces/AddTwoInts', service: 'add_two_ints'},
+        op: 'advertise_service', type: 'example_interfaces/AddTwoInts', service: '/add_two_ints'},
       unadvertiseServiceMsg: {op: 'unadvertise_service', service: '/add_two_ints'},
       opCount: 2,
       finalStatus: 'none'
@@ -93,7 +93,7 @@ module.exports = function() {
       unadvertiseServiceMsg: {op: 'unadvertise_service', service: '\u8bdd\u9898'},
       opCount: 2,
       finalStatus: 'error'
-    }            
+    }
   ];
 
   testCasesData.forEach((testData, index) => {
