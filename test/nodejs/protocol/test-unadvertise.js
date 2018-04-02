@@ -34,6 +34,14 @@ module.exports = function() {
       finalStatus: 'none'
     },
     {
+      title: 'unadvertise positive case 3: ROS2 message type format',
+      advertiseMsg: {op: 'advertise', id: 'advertise_ros2_msg_setup', topic: 'unadvertise_ros2_msg_topic',
+        type: 'std_msgs/msg/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_ros2_msg_setup', topic: 'unadvertise_ros2_msg_topic'},
+      opCount: 2,
+      finalStatus: 'none'
+    },
+    {
       title: 'unadvertise negative case 1',
       unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id3', topic: 'unadvertise_topic3'},
       opCount: 1,
@@ -43,6 +51,34 @@ module.exports = function() {
       title: 'unadvertise field checking case 1: invalid topic',
       advertiseMsg: {op: 'advertise', id: 'advertise_setup4', topic: 'unadvertise_topic4', type: 'std_msgs/String'},
       unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id4', topic: true},
+      opCount: 2,
+      finalStatus: 'error'
+    },
+    {
+      title: 'unadvertise field checking case 2: topic cannot be empty',
+      advertiseMsg: {op: 'advertise', id: 'advertise_setup5', topic: 'unadvertise_topic5', type: 'std_msgs/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id5', topic: ''},
+      opCount: 2,
+      finalStatus: 'error'
+    },
+    {
+      title: 'unadvertise field checking case 3: topic cannot contain single quote',
+      advertiseMsg: {op: 'advertise', id: 'advertise_setup6', topic: 'unadvertise_topic6', type: 'std_msgs/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id6', topic: "'single_advertise_topic'"},
+      opCount: 2,
+      finalStatus: 'error'
+    },
+    {
+      title: 'unadvertise field checking case 3: topic cannot contain double quotes',
+      advertiseMsg: {op: 'advertise', id: 'advertise_setup7', topic: 'unadvertise_topic7', type: 'std_msgs/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id7', topic: '"double_advertise_topic"'},
+      opCount: 2,
+      finalStatus: 'error'
+    },
+    {
+      title: 'unadvertise field checking case 3: topic does not support unicode',
+      advertiseMsg: {op: 'advertise', id: 'advertise_setup8', topic: 'unadvertise_topic8', type: 'std_msgs/String'},
+      unadvertiseMsg: {op: 'unadvertise', id: 'unadvertise_id8', topic: '\u8bdd\u9898'},
       opCount: 2,
       finalStatus: 'error'
     }

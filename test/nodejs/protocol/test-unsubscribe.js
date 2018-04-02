@@ -57,14 +57,14 @@ module.exports = function() {
       opCount: 2,
       finalStatus: 'none'
     },
-    {
-      title: 'subscribe field checking case 2: invalid topic',
-      subscribeMsg1: {
-        op: 'subscribe', id: 'subscribe_setup_id7', topic: 'subscribe_topic7', type: 'std_msgs/ColorRGBA'},
-      unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id7', topic: 42},
-      opCount: 2,
-      finalStatus: 'error'
-    }
+    // {
+    //   title: 'unsubscribe field checking case 2: invalid topic',
+    //   subscribeMsg1: {
+    //     op: 'subscribe', id: 'subscribe_setup_id7', topic: 'subscribe_topic7', type: 'std_msgs/ColorRGBA'},
+    //   unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id7', topic: 42},
+    //   opCount: 2,
+    //   finalStatus: 'error'
+    // }
   ];
 
   testCasesData.forEach((testData, index) => {
