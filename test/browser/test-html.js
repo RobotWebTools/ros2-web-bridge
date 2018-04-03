@@ -16,11 +16,14 @@
 
 const assert = require('assert');
 const fs = require('fs');
+const path = require('path');
 const child = require('child_process');
 const puppeteer = require('puppeteer');
 const jsdom = require('jsdom');
 const async = require('async');
 
+var bridgePath = path.join(`{__dirname}/../`, 'bin', 'rosbridge.js');
+var bridge = child.fork(bridgePath);
 var server = child.fork(`${__dirname}/server.js`, {cwd: `${__dirname}`});
 var htmlTests = require('./html_list.json').htmls;
 
@@ -54,7 +57,8 @@ async.each(htmlTests, async function (html, callback) {
 
   await browser.close();
 }, function () {
-  server.kill('SIGINT');
+  // server.kill('SIGINT');
+  // bridge.kill('SIGINT');
   console.log(testResults);
   testResults.forEach((testResult) => {
     assert.deepStrictEqual(testResult['result'], 'Pass');

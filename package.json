@@ -18,7 +18,7 @@
     "browser": "node test/browser/test-html.js",
     "lint": "eslint --max-warnings=0 index.js lib examples test",
     "protocol": "mocha test/nodejs/protocol/entry.js",
-    "ci": "npm run test && npm run browser && npm run protocol"
+    "ci": "npm run test && npm run protocol && npm run browser"
   },
   "license": "Apache-2.0",
   "repository": {
