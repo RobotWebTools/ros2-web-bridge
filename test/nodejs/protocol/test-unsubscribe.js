@@ -41,7 +41,7 @@ module.exports = function() {
       subscribeMsg1: {op: 'subscribe', id: 'subscribe_setup_id4', topic: 'unsubscribe_topic4', type: 'std_msgs/Byte'},
       unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id4', topic: 'unsubscribe_topic4x'},
       opCount: 2,
-      finalStatus: 'none'
+      finalStatus: 'warning'
     },
     {
       title: 'unsubscribe negative case 2: unknown id',
