@@ -41,7 +41,7 @@ module.exports = function() {
       subscribeMsg1: {op: 'subscribe', id: 'subscribe_setup_id4', topic: 'unsubscribe_topic4', type: 'std_msgs/Byte'},
       unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id4', topic: 'unsubscribe_topic4x'},
       opCount: 2,
-      finalStatus: 'none'
+      finalStatus: 'warning'
     },
     {
       title: 'unsubscribe negative case 2: unknown id',
@@ -57,14 +57,14 @@ module.exports = function() {
       opCount: 2,
       finalStatus: 'none'
     },
-    // {
-    //   title: 'unsubscribe field checking case 2: invalid topic',
-    //   subscribeMsg1: {
-    //     op: 'subscribe', id: 'subscribe_setup_id7', topic: 'subscribe_topic7', type: 'std_msgs/ColorRGBA'},
-    //   unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id7', topic: 42},
-    //   opCount: 2,
-    //   finalStatus: 'error'
-    // }
+    {
+      title: 'unsubscribe field checking case 2: invalid topic',
+      subscribeMsg1: {
+        op: 'subscribe', id: 'subscribe_setup_id7', topic: 'subscribe_topic7', type: 'std_msgs/ColorRGBA'},
+      unsubscribeMsg: {op: 'unsubscribe', id: 'subscribe_setup_id7', topic: 42},
+      opCount: 2,
+      finalStatus: 'error'
+    }
   ];
 
   testCasesData.forEach((testData, index) => {
