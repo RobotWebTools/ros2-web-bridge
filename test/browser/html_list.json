@@ -1,7 +1,16 @@
 {
   "htmls": [
-    "test-example.html",
-    "test-goal.html",
-    "test-topic.html"
+    {
+      "suite": "test-example.html",
+      "waitingTime": 200
+    },
+    {
+      "suite": "test-goal.html",
+      "waitingTime": 200
+    },
+    {
+      "suite": "test-topic.html",
+      "waitingTime": 2000
+    }
   ]
 }

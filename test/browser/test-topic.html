@@ -95,31 +95,31 @@
       
     }, "Topic.subscribe() negative case 1");
 
-    test(function(t) {
-      var ros = new ROSLIB.Ros();
-      ros.connect('ws://127.0.0.1:9090');
+    // test(function(t) {
+    //   var ros = new ROSLIB.Ros();
+    //   ros.connect('ws://127.0.0.1:9090');
 
-      var example = new ROSLIB.Topic({
-        ros : ros,
-        name : '/example_topic_read4',
-        messageType : 'std_msgs/String'
-      });
-      example.toStream().read();
-      example.publish('hello world!');
-    }, "Topic.toStream() read");
+    //   var example = new ROSLIB.Topic({
+    //     ros : ros,
+    //     name : '/example_topic_read4',
+    //     messageType : 'std_msgs/String'
+    //   });
+    //   example.toStream().read();
+    //   example.publish('hello world!');
+    // }, "Topic.toStream() read");
     
-    test(function(t) {
-      var ros = new ROSLIB.Ros();
-      ros.connect('ws://127.0.0.1:9090');
+    // test(function(t) {
+    //   var ros = new ROSLIB.Ros();
+    //   ros.connect('ws://127.0.0.1:9090');
 
-      var example = new ROSLIB.Topic({
-        ros : ros,
-        name : '/example_topic_write4',
-        messageType : 'std_msgs/String'
-      });
-      example.toStream().write('again');
-      example.publish('hello world!');
-    }, "Topic.toStream() write");
+    //   var example = new ROSLIB.Topic({
+    //     ros : ros,
+    //     name : '/example_topic_write4',
+    //     messageType : 'std_msgs/String'
+    //   });
+    //   example.toStream().write('again');
+    //   example.publish('hello world!');
+    // }, "Topic.toStream() write");
     
     test(function(t) {
       var ros = new ROSLIB.Ros();
