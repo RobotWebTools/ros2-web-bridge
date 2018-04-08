@@ -141,7 +141,7 @@ module.exports = function() {
             done();
           }
         }
-        if (response.op === testData.expectedResponse.op) {
+        if (testData.expectedResponse && response.op === testData.expectedResponse.op) {
           assert.deepStrictEqual(response.result, testData.expectedResponse.result);
           assert.deepEqual(response.values.sum, testData.expectedResponse.sum);
           ws.close();
