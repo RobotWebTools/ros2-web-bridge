@@ -18,7 +18,7 @@
     "browser": "node test/browser/test-html.js",
     "lint": "eslint --max-warnings=0 index.js lib examples test",
     "protocol": "mocha test/nodejs/protocol/entry.js",
-    "ci": "npm run test && npm run browser && npm run protocol"
+    "ci": "npm run test && npm run protocol && npm run browser"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -44,7 +44,7 @@
     "commander": "^2.12.2",
     "debug": "^3.1.0",
     "jsdom": "^11.5.1",
-    "rclnodejs": "^0.x",
+    "rclnodejs": "^0.3.5",
     "uuid": "^3.1.0",
     "ws": "^5.1.0"
   }

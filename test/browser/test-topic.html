@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example tests with testharness.js for Travis CI</title>
+  <script src="resources/testharness.js"></script>
+  <script src="resources/testharnessreport.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic1',
+        messageType : 'std_msgs/String'
+      });
+      example.advertise();
+    }, "Topic.advertise() postiive case 1");
+
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic_neg1',
+        messageType : 'std_msgs/Foo'
+      });
+      example.advertise();
+    }, "Topic.advertise() negative case 2");
+
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.connect('ws://127.0.0.1:9090');
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic2',
+        messageType : 'std_msgs/String'
+      });
+      example.advertise();
+      example.publish('hello world');
+    }, "Topic.publish() positive case 1");
+
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.connect('ws://127.0.0.1:9090');
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic_neg2',
+        messageType : 'std_msgs/String'
+      });
+
+      example.publish('hello world');
+    }, "Topic.publish() postive case 2");    
+    
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic3',
+        messageType : 'std_msgs/String'
+      });
+      example.subscribe(function(message) {
+        assert_equals(message.data, 'hello world!');
+        t.done();
+      });
+      example.publish('hello world!');
+    }, "Topic.subscribe() positive case 1");
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic_neg3',
+        messageType : 'std_msgs/String'
+      });
+      example.subscribe(function(message) {
+        assert_unreached('never received message as no publisher');
+      });
+      setTimeout(function() {
+        t.done();
+      }, 500);
+      
+    }, "Topic.subscribe() negative case 1");
+
+    // test(function(t) {
+    //   var ros = new ROSLIB.Ros();
+    //   ros.connect('ws://127.0.0.1:9090');
+
+    //   var example = new ROSLIB.Topic({
+    //     ros : ros,
+    //     name : '/example_topic_read4',
+    //     messageType : 'std_msgs/String'
+    //   });
+    //   example.toStream().read();
+    //   example.publish('hello world!');
+    // }, "Topic.toStream() read");
+    
+    // test(function(t) {
+    //   var ros = new ROSLIB.Ros();
+    //   ros.connect('ws://127.0.0.1:9090');
+
+    //   var example = new ROSLIB.Topic({
+    //     ros : ros,
+    //     name : '/example_topic_write4',
+    //     messageType : 'std_msgs/String'
+    //   });
+    //   example.toStream().write('again');
+    //   example.publish('hello world!');
+    // }, "Topic.toStream() write");
+    
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic5',
+        messageType : 'std_msgs/String'
+      });
+      example.advertise();
+      example.unadvertise();
+    }, "Topic.unadvertise() positive case 1");
+    
+    test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic_neg5',
+        messageType : 'std_msgs/String'
+      });
+
+      example.unadvertise();
+    }, "Topic.unadvertise() negative case 1");
+    
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic6',
+        messageType : 'std_msgs/String'
+      });
+
+      example.subscribe(function(message) {
+        assert_equals(message.data, 'hello world!');
+        example.unsubscribe();
+        t.done();
+      });
+      example.publish('hello world!');
+    }, "Topic.unsubscribe() positive case 1");
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+      ros.connect('ws://127.0.0.1:9090');
+
+      var example = new ROSLIB.Topic({
+        ros : ros,
+        name : '/example_topic_neg6',
+        messageType : 'std_msgs/String'
+      });
+
+      example.subscribe(function(message) {
+        assert_equals(message.data, 'hello world!');
+        example.unsubscribe(function() {
+          assert_unreached('unable to reach');
+        });
+
+        setTimeout(function() {
+          t.done();
+        }, 500);        
+      });
+      example.publish('hello world!');
+    }, "Topic.unsubscribe() negative case 1");    
+  </script>
+</body>
+</html>
