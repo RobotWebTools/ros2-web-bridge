@@ -11,6 +11,10 @@
     {
       "suite": "test-topic.html",
       "waitingTime": 2000
+    },
+    {
+      "suite": "test-ros.html",
+      "waitingTime": 3000
     }
   ]
 }

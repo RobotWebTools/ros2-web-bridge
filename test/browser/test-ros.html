@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example tests with testharness.js for Travis CI</title>
+  <script src="resources/testharness.js"></script>
+  <script src="resources/testharnessreport.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true, 'Connection event triggered.');
+      }));
+
+    }, 'Ros class constructor positive case 1');
+
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', function() {
+        assert_unreached('Connection event not triggered.');
+      });
+    }, 'Ros class constructor positive case 2');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true, 'Connection event triggered.');
+      }));
+      
+      ros.callOnConnection();
+
+    }, 'Ros.callOnConnection() positive test case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+      
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true, 'Connection event triggered.');
+      }));
+
+      const adMsg = {op: 'advertise', topic: '/callOnConn_topic', type: 'std_msgs/String'};
+      ros.callOnConnection(adMsg);
+
+    }, 'Ros.callOnConnection() positive test case 2');
+    
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', function() {
+        assert_unreached('Connection event should never be triggered.');
+      });
+      const adMsg = {op: 'advertise', topic: '/callOnConn_neg_topic', type: 'std_msgs/String'};
+      ros.callOnConnection(adMsg);
+
+    }, 'Ros.callOnConnection() negative test case');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      ros.on('connection', t.step_func(function() {
+        assert_true(true, 'Connected.');
+        ros.close();
+      }));
+      ros.on('close', t.step_func_done(function() {
+        assert_true(true, 'Closed.');
+      }));
+
+    }, 'Ros.close() positive test case 1');
+
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', function() {
+        assert_unreached('Not connected.');
+      })
+      ros.on('close', function() {
+        assert_unreached('Not closed.');
+      });
+
+      ros.close();
+
+    }, 'Ros.close() negative test case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true, 'Connected');
+      }));
+
+      ros.connect('ws://127.0.0.1:9090');
+
+    }, 'Ros.connect() positive test case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true, 'Connected.');
+      }));
+      
+      ros.connect('ws://localhost:9090');
+
+    }, 'Ros.connect() positive test case 2');
+
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      assert_throws(new SyntaxError(), function() {
+        ros.connect();
+      });
+      
+    }, 'Ros.connect() negative test case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      t.step_func_done(function() {
+        try {
+          assert_throws(new Error(), function() {
+            ros.connect('wss://127.0.0.1:9090');
+          });
+        } catch(e) {
+          assert_true(true);
+        }
+      });
+      t.step_timeout(function() {
+        t.done();
+      }, 1000);
+      
+    }, 'Ros.connect() negative test case 2');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      t.step_func_done(function() {
+        try {
+          assert_throws(new Error(), function() {
+            ros.connect('ws://127.0.0.1:9091');
+          });
+        } catch(e) {
+          assert_true(true);
+        }     
+      });
+      
+      t.step_timeout(function() {
+        t.done();
+      }, 1000);
+
+    }, 'Ros.connect() negative test case 3');
+  </script>
+</body>
+</html>  
