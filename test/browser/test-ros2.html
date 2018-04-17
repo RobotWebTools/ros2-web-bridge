@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example tests with testharness.js for Travis CI</title>
+  <script src="resources/testharness.js"></script>
+  <script src="resources/testharnessreport.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('error');
+    }, 'Ros.setStatusLevel() test case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('error', '/setStatusLevel_id1');
+    }, 'Ros.setStatusLevel() test case 2');    
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('warning');
+    }, 'Ros.setStatusLevel() test case 3');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('warning', '/setStatusLevel_id2');
+    }, 'Ros.setStatusLevel() test case 4');    
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('info');
+    }, 'Ros.setStatusLevel() test case 5');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('info', '/setStatusLevel_id3');
+    }, 'Ros.setStatusLevel() test case 6');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('none');
+    }, 'Ros.setStatusLevel() test case 7');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', t.step_func_done(function() {
+        assert_true(true);
+      }));
+      ros.connect('ws://127.0.0.1:9090');
+      ros.setStatusLevel('none', '/setStatusLevel_id4');
+    }, 'Ros.setStatusLevel() test case 8');
+
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      ros.on('connection', function() {
+        assert_true(true);
+      });
+      ros.connect('ws://127.0.0.1:9090');
+
+      var topic = new ROSLIB.Topic({
+        ros : ros,
+        name : '/my_topic',
+        messageType : 'std_msgs/String'
+      });
+      topic.publish('my data');
+
+      assert_throws(new Error(), function() {
+        ros.setStatusLevel('foo');
+      });      
+    }, 'Ros.setStatusLevel() test case 9');
+   
+    test(function() {
+      var ros = new ROSLIB.Ros();
+
+      ros.connect('ws://127.0.0.1:9090');
+      ros.getMessageDetails('std_msgs/String');
+    }, 'Ros.getMessageDetails()');
+  </script>
+</body>
+</html>  

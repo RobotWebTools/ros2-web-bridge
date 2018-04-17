@@ -14,9 +14,9 @@
     test(function(t) {
       var ros = new ROSLIB.Ros();
       var example = new ROSLIB.Topic({
-        ros : ros,
-        name : '/example_topic',
-        messageType : 'std_msgs/String'
+        ros: ros,
+        name: '/example_topic',
+        messageType: 'std_msgs/String'
       });
 
       assert_true(true, "Nothing wrong happened.");
@@ -26,9 +26,9 @@
       var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
 
       var fibonacciServer = new ROSLIB.SimpleActionServer({
-        ros : ros,
-        serverName : '/goal_fibonacci1',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
       fibonacciServer.on('goal', function(goalMessage) {
         fibonacciSequence = [];
@@ -56,28 +56,28 @@
       }));
       
       var fibonacciClient = new ROSLIB.ActionClient({
-        ros : ros,
-        serverName : '/goal_fibonacci1',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
 
       var goal = new ROSLIB.Goal({
-        actionClient : fibonacciClient,
-        goalMessage : {
-          order : 7
+        actionClient: fibonacciClient,
+        goalMessage: {
+          order: 7
         }
       });
       
       goal.cancel();
     }, 'Goal.cancel() test case 1');
 
-    async_test(function(t) {
+    test(function() {
       var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
-      
+
       var fibonacciServer = new ROSLIB.SimpleActionServer({
-        ros : ros,
-        serverName : '/goal_fibonacci2',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
       fibonacciServer.on('goal', function(goalMessage) {
         fibonacciSequence = [];
@@ -99,39 +99,31 @@
         var result = { sequence: fibonacciSequence};
         fibonacciServer.setSucceeded(result);
       });
-
-      fibonacciServer.on('cancel', t.step_func(function() {
-        assert_true(true);
-      }));
       
       var fibonacciClient = new ROSLIB.ActionClient({
-        ros : ros,
-        serverName : '/goal_fibonacci2',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
 
       var goal = new ROSLIB.Goal({
-        actionClient : fibonacciClient,
-        goalMessage : {
-          order : 7
+        actionClient: fibonacciClient,
+        goalMessage: {
+          order: 7
         }
       });
       
       goal.cancel();
-      goal.cancel();
-
-      setTimeout(function() {
-        t.done();
-      }, 200)
+      goal.cancel();     
     }, 'Goal.cancel() test case 2');
 
     async_test(function(t) {
       var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
-      
+
       var fibonacciServer = new ROSLIB.SimpleActionServer({
-        ros : ros,
-        serverName : '/goal_fibonacci3',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/listener_fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
       fibonacciServer.on('goal', function(goalMessage) {
         fibonacciSequence = [];
@@ -153,83 +145,26 @@
         var result = { sequence: fibonacciSequence};
         fibonacciServer.setSucceeded(result);
       });
-
-      fibonacciServer.on('cancel', t.step_func_done(function() {
-        t.done();
-      }));
       
       var fibonacciClient = new ROSLIB.ActionClient({
-        ros : ros,
-        serverName : '/goal_fibonacci3',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+        ros: ros,
+        serverName: '/listener_fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
 
       var goal = new ROSLIB.Goal({
-        actionClient : fibonacciClient,
-        goalMessage : {
-          order : 7
+        actionClient: fibonacciClient,
+        goalMessage: {
+          order: 7
         }
       });
       
-      goal.on('result', function(result) {
-        assert_array_equals(result.sequence, [0, 1, 1, 2, 3, 5, 8, 13, 21]);
-        t.done();
-      })
-      goal.send();
-    }, 'Goal.send() test case 1');
-
-    async_test(function(t) {
-      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
-      
-      var fibonacciServer = new ROSLIB.SimpleActionServer({
-        ros : ros,
-        serverName : '/goal_fibonacci4',
-        actionName : 'actionlib_tutorials/FibonacciAction'
+      var listener = new ROSLIB.ActionListener({
+        ros: ros,
+        serverName: '/listener_fibonacci',
+        actionName: 'actionlib_tutorials/FibonacciAction'
       });
-      fibonacciServer.on('goal', function(goalMessage) {
-        fibonacciSequence = [];
-        fibonacciSequence.push(0);
-        fibonacciSequence.push(1);
-
-        for (var i = 1; i < goalMessage.order; i++ ) {
-          fibonacciSequence.push( fibonacciSequence[i] + fibonacciSequence[i-1] );
-
-        if (that.canceled === true ) {
-          that.fibonacciServer.setPreempted();
-        }
-        //send feedback
-        var feedback = { sequence: fibonacciSequence };
-          fibonacciServer.sendFeedback(fibonacciSequence);
-        }
-
-        //send result
-        var result = { sequence: fibonacciSequence};
-        fibonacciServer.setSucceeded(result);
-      });
-
-      fibonacciServer.on('cancel', t.step_func_done(function() {
-        t.done();
-      }));
-      
-      var fibonacciClient = new ROSLIB.ActionClient({
-        ros : ros,
-        serverName : '/goal_fibonacci4',
-        actionName : 'actionlib_tutorials/FibonacciAction'
-      });
-
-      var goal = new ROSLIB.Goal({
-        actionClient : fibonacciClient,
-        goalMessage : {
-          order : 7
-        }
-      });
-      
-      goal.on('result', function(result) {
-        assert_array_equals(result.sequence, [0, 1, 1, 2, 3, 5, 8, 13, 21]);
-        t.done();
-      })
-      goal.send(1000);
-    }, 'Goal.send() test case 2');    
+    }, 'ActionListener');    
 
   </script>
 </body>

@@ -6,7 +6,7 @@
     },
     {
       "suite": "test-goal.html",
-      "waitingTime": 200
+      "waitingTime": 1000
     },
     {
       "suite": "test-topic.html",
@@ -15,6 +15,18 @@
     {
       "suite": "test-ros.html",
       "waitingTime": 3000
+    },
+    {
+      "suite": "test-ros2.html",
+      "waitingTime": 1000
+    },
+    {
+      "suite": "test-actionlistener.html",
+      "waitingTime": 500
+    },
+    {
+      "suite": "test-actionclient.html",
+      "waitingTime": 2000
     }
   ]
 }
