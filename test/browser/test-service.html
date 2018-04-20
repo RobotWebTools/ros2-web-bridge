@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example tests with testharness.js for Travis CI</title>
+  <script src="resources/testharness.js"></script>
+  <script src="resources/testharnessreport.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var svrService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints1',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      svrService.advertise(function(req, resp) {
+        resp.sum = req.a + req.b;
+        assert_equals(resp.sum, 3);
+        assert_true(svrService.isAdvertised);
+        t.done();
+        return true;
+      });
+
+      var reqService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints1',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      var request = new ROSLIB.ServiceRequest({
+        a: 1,
+        b: 2
+      });
+      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
+      reqService.callService(args, function(result) {
+      });
+
+    }, 'Service.advertise() positive case 1');
+
+    test(function() {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var service = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints2',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+
+      service.advertise();
+      assert_false(service.isAdvertised);
+
+      service.advertise('Any objects but a function');
+      assert_false(service.isAdvertised);
+    }, 'Service.advertise() negative case 1');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var svrService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints3',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      svrService.advertise(function(req, resp) {
+        resp.sum = req.a + req.b;
+        assert_equals(resp.sum, 7);
+        assert_true(svrService.isAdvertised);
+        return true;
+      });
+
+      var reqService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints3',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      var request = new ROSLIB.ServiceRequest({
+        a: 3,
+        b: 4
+      });
+      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
+      reqService.callService(args, function(result) {
+        assert_equals(result.sum, 7);
+        t.done();
+      });
+    }, 'Service.callService() positive case 1');
+
+    // async_test(function(t) {
+    //   var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+    //   var svrService = new ROSLIB.Service({
+    //     ros: ros,
+    //     name: '/add_two_ints4',
+    //     serviceType: 'example_interfaces/AddTwoInts'
+    //   });
+    //   svrService.advertise(function(req, resp) {
+    //     resp.sum = req.a + req.b;
+    //     assert_equals(resp.sum, 11);
+    //     assert_true(svrService.isAdvertised);
+    //     return true;
+    //   });
+
+    //   var reqService = new ROSLIB.Service({
+    //     ros: ros,
+    //     name: '/add_two_ints4',
+    //     serviceType: 'example_interfaces/AddTwoInts'
+    //   });
+    //   var request = new ROSLIB.ServiceRequest({
+    //     a: 5,
+    //     b: 6
+    //   });
+    //   var args = {request: request};
+    //   reqService.callService(args, function(result) {
+    //     assert_equals(result.sum, 11);
+    //     t.done();
+    //   });
+
+    // }, 'Service.callService() positive case 2');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var svrService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints5',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      svrService.advertise(function(req, resp) {
+        resp.sum = req.a + req.b;
+        assert_equals(resp.sum, 19);
+        assert_true(svrService.isAdvertised);
+        return true;
+      });
+
+      var reqService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints5',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      var args = {request: {a: 9, b: 10}, type: 'example_interfaces/AddTwoInts'};
+      reqService.callService(args, function(result) {
+        assert_equals(result.sum, 19);
+        t.done();
+      });
+
+    }, 'Service.callService() positive case 3');
+    
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var svrService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints6',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      svrService.advertise(function(req, resp) {
+        resp.sum = req.a + req.b;
+        assert_unreached();
+        return true;
+      });
+
+      var reqService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints6',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      var request = new ROSLIB.ServiceRequest({
+        c: 9, d: 10
+      });
+      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
+      reqService.callService(args, function(result) {
+        assert_unreached('Never go to here as callService() failed.');
+      });
+      setTimeout(function() {
+          t.done();
+      }, 1000);
+
+    }, 'Service.callService() negative case 1');
+
+    test(function() {
+      var request = new ROSLIB.ServiceRequest({
+        a: 1, b: 2
+      });
+      assert_equals(request.a, 1);
+      assert_equals(request.b, 2);
+    }, 'ROSLIB.ServiceRequest object');
+
+    async_test(function(t) {
+      var ros = new ROSLIB.Ros({url: 'ws://127.0.0.1:9090'});
+
+      var svrService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints7',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      svrService.advertise(function(req, resp) {
+        resp.sum = req.a + req.b;
+        return true;
+      });
+
+      var reqService = new ROSLIB.Service({
+        ros: ros,
+        name: '/add_two_ints7',
+        serviceType: 'example_interfaces/AddTwoInts'
+      });
+      var request = new ROSLIB.ServiceRequest({
+        a: 11,
+        b: 12
+      });
+      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
+      reqService.callService(args, function(result) {
+        assert_true(result instanceof ROSLIB.ServiceResponse);
+        assert_equals(result.sum, 23);
+        t.done();
+      });
+    }, 'ROSLIB.ServiceResponse object');
+  </script>
+</body>
+</html>
