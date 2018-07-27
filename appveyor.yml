@@ -12,7 +12,7 @@ environment:
   PYTHON3: "c:\\Python37"
   PYTHON2: "c:\\Python27"
 
-clone_folder: c:\proj\rclnodejs
+clone_folder: c:\proj\ros2-web-bridge
 
 before_build:
   - cd c:\
