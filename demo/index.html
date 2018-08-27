@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ROS</title>
+	<meta name="keywords" content="roslibjs, ros2-web-bridge and rclnodejs"	/>
+	<meta name="author" content="ros" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="css/component.css" />
+	<script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+	<script src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+	<script src="https://static.robotwebtools.org/EaselJS/current/easeljs.min.js"></script>
+	<script src="https://static.robotwebtools.org/ros2djs/current/ros2d.min.js"></script>
+</head>
+<body>
+	<div id="perspective" class="perspective effect-movedown">
+		<div class="container">
+			<div class="wrapper">
+				<header class="ros-header">
+					<div class="columnleft">
+						<div class='controller'>
+							<div class='nx'>
+								<div></div>
+								<div id="up">
+									<svg aria-hidden="true" data-prefix="far" data-icon="arrow-alt-circle-up" class="" role="img" xmlns="http://www.w3.org/2000/svg"
+									  viewBox="0 0 512 512">
+										<path fill="currentColor" d="M256 504c137 0 248-111 248-248S393 8 256 8 8 119 8 256s111 248 248 248zm0-448c110.5 0 200 89.5 200 200s-89.5 200-200 200S56 366.5 56 256 145.5 56 256 56zm20 328h-40c-6.6 0-12-5.4-12-12V256h-67c-10.7 0-16-12.9-8.5-20.5l99-99c4.7-4.7 12.3-4.7 17 0l99 99c7.6 7.6 2.2 20.5-8.5 20.5h-67v116c0 6.6-5.4 12-12 12z"></path>
+									</svg>
+								</div>
+								<div></div>
+							</div>
+							<div class='nx'>
+								<div id="left">
+									<svg aria-hidden="true" data-prefix="far" data-icon="arrow-alt-circle-left" class="" role="img" xmlns="http://www.w3.org/2000/svg"
+									  viewBox="0 0 512 512">
+										<path fill="currentColor" d="M8 256c0 137 111 248 248 248s248-111 248-248S393 8 256 8 8 119 8 256zm448 0c0 110.5-89.5 200-200 200S56 366.5 56 256 145.5 56 256 56s200 89.5 200 200zm-72-20v40c0 6.6-5.4 12-12 12H256v67c0 10.7-12.9 16-20.5 8.5l-99-99c-4.7-4.7-4.7-12.3 0-17l99-99c7.6-7.6 20.5-2.2 20.5 8.5v67h116c6.6 0 12 5.4 12 12z"></path>
+									</svg>
+								</div>
+								<div></div>
+								<div id="right">
+									<svg aria-hidden="true" data-prefix="far" data-icon="arrow-alt-circle-right" class="" role="img" xmlns="http://www.w3.org/2000/svg"
+									  viewBox="0 0 512 512">
+										<path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path>
+									</svg>
+								</div>
+							</div>
+							<div class='nx'>
+								<div></div>
+								<div id="down">
+									<svg aria-hidden="true" data-prefix="far" data-icon="arrow-alt-circle-down" class="" role="img" xmlns="http://www.w3.org/2000/svg"
+									  viewBox="0 0 512 512">
+										<path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm-32-316v116h-67c-10.7 0-16 12.9-8.5 20.5l99 99c4.7 4.7 12.3 4.7 17 0l99-99c7.6-7.6 2.2-20.5-8.5-20.5h-67V140c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12z"></path>
+									</svg>
+								</div>
+								<div></div>
+							</div>
+						</div>
+						<div class='playstop'>
+							<div id="start">
+								Play
+							</div>
+						</div>
+					</div>
+					<div class="twodmap" id="ros2dmap">
+					</div>
+				</header>
+				<div class="main clearfix">
+					<div class="log" id="log"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/btnstate.js"></script>
+	<script src="js/ros2dmap.js"></script>
+	<script src="js/log.js"></script>
+	<script src="js/controller.js"></script>
+	<script>
+		let ros = new ROSLIB.Ros();
+		let bridgeHost = '127.0.0.1';
+		let bridgePort = 9090;
+		
+		ros.on('connection', function() {
+    	console.log('bridge connected');
+  	});
+  	ros.on('error', function(data) {
+    	console.log('error');
+  	});
+  	ros.on('closed', function() {
+    	console.log('bridge closed');
+  	});
+		ros.connect('ws://' + bridgeHost + ':' + bridgePort);
+		
+		let ros2dmap = new Ros2dMap(ros, {
+			divName: 'ros2dmap',
+    	width: 400,
+    	height: 400
+		});
+		let webRosController = new WebRosController(ros, ros2dmap);
+		let btnState = new ButtonState();
+
+		let startBtn = document.getElementById('start');
+		startBtn.onclick = function() {
+
+			if (!webRosController.isRobotMoving) {
+				webRosController.start();
+				startBtn.innerHTML = 'Stop';
+				btnState.clearState();
+				btnState.setStartButton(true);
+			} else {
+				webRosController.stop();
+				startBtn.innerHTML = 'Start';
+				btnState.clearState();
+				btnState.setStartButton(false);
+			}
+		};
+
+		function upStartHandler() {
+			webRosController.moveForward();
+			btnState.setSvgButton('up');
+		}
+
+		function downStartHandler() {
+			webRosController.moveBack();
+			btnState.setSvgButton('down');
+		}
+
+		function leftStartHandler() {
+			webRosController.turnLeft();
+			btnState.setSvgButton('left');
+		}
+
+		function rightStartHandler() {
+			webRosController.turnRight();
+			btnState.setSvgButton('right');
+		}
+
+		function endHandler() {
+			webRosController.stop();
+			btnState.clearState();
+		}
+
+		let btnUp = document.getElementById('up');
+		btnUp.addEventListener('mousedown', upStartHandler, false);
+		btnUp.addEventListener('mouseup', endHandler, false);
+		btnUp.addEventListener('touchstart', upStartHandler, false);
+		btnUp.addEventListener('touchend', endHandler, false);
+
+		let btnDown = document.getElementById('down');
+		btnDown.addEventListener('mousedown', downStartHandler, false);
+		btnDown.addEventListener('mouseup', endHandler, false);
+		btnDown.addEventListener('touchstart', downStartHandler, false);
+		btnDown.addEventListener('touchend', endHandler, false);
+
+		let btnLeft = document.getElementById('left');
+		btnLeft.addEventListener('mousedown', leftStartHandler, false);
+		btnLeft.addEventListener('mouseup', endHandler, false);
+		btnLeft.addEventListener('touchstart', leftStartHandler, false);
+		btnLeft.addEventListener('touchend', endHandler, false);
+
+		let btnRight = document.getElementById('right');
+		btnRight.addEventListener('mousedown', rightStartHandler, false);
+		btnRight.addEventListener('mouseup', endHandler, false);
+		btnRight.addEventListener('touchstart', rightStartHandler, false);
+		btnRight.addEventListener('touchend', endHandler, false);
+	</script>
+	</body>
+</html>

@@ -1,0 +1,414 @@
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	color: #5a5350;
+	font-weight: 200;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	text-shadow: #000 1px 1px;
+}
+
+a {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.8) !important;
+	outline: none;
+}
+
+a:hover,
+a:focus {
+	color: rgba(255, 255, 255, 1.0) !important;
+	text-shadow: #000 1px 2px;
+	outline: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: " ";
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.ros-header,
+.ros-top {
+	font-family: 'Lato', Arial, sans-serif;
+}
+
+.ros-header {
+	margin: 0 auto 1em;
+	padding: 2em;
+	text-align: center;
+}
+
+.ros-header h1 {
+	margin: 0;
+	font-weight: 300;
+	font-size: 2.625em;
+	line-height: 1.2;
+}
+
+.ros-header span {
+	display: block;
+	padding: 0 0 0.6em 0.1em;
+	font-size: 60%;
+	color: #aca89a;
+}
+
+/* To Navigation Style */
+
+.ros-top {
+	width: 100%;
+	text-transform: uppercase;
+	font-size: 0.69em;
+	line-height: 2.2;
+	font-weight: 700;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.ros-top a {
+	display: inline-block;
+	padding: 0 1em;
+	text-decoration: none;
+	letter-spacing: 0.1em;
+}
+
+.ros-top a:hover {
+	background: rgba(255, 255, 255, 0.4);
+	color: #333;
+}
+
+.ros-top span.right {
+	float: right;
+}
+
+.ros-top span.right a {
+	display: block;
+	float: left;
+}
+
+.twodmap {
+	border: 1px rgba(255, 255, 255, 0.2);
+	/* padding: 4em; */
+}
+
+.main {
+	max-width: 96em;
+	margin: 0 auto;
+}
+
+.columnleft {
+	float: left;
+	width: 38.2%;
+	padding: 0 2em;
+	min-height: 300px;
+	position: relative;
+	text-align: center;
+}
+
+.columnright {
+	float: left;
+	width: 61.8%;
+	padding: 0 2em;
+	min-height: 300px;
+	position: relative;
+	text-align: right;
+}
+
+.columnright {
+	/* box-shadow: -1px 0 0 rgba(0, 0, 0, 0.1); */
+	text-align: left;
+}
+
+.controller {
+	text-align: center;
+	display: inline-flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.controller .nx {
+	text-align: center;
+	display: inline-flex;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.controller .nx div {
+	width: 100px;
+	height: 100px;
+}
+
+.playstop {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.playstop div {
+	font-size: 1.5em;
+	border: 6px solid rgba(255, 255, 255, 0.6);
+	padding: 0.4em 0.8em 0.5em 0.8em;
+	width: 180px;
+	margin: 2em auto;
+	border-radius: 12px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.playstop div:hover {
+	color: rgba(255, 255, 255, 1.0);
+	border: 6px solid rgba(255, 255, 255, 1.0);
+	cursor: pointer;
+	font-weight: 800;
+}
+
+svg {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+svg:hover {
+	color: rgba(255, 255, 255, 1.0);
+	cursor: pointer;
+}
+
+svg:active {
+	color: rgba(255, 255, 255, 1.0);
+	cursor: pointer;
+}
+
+svg:focus {
+	color: rgba(255, 0, 0, 1.0);
+}
+
+.log {
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	min-height: 460px;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 16px;
+	padding: 1em;
+	color: rgba(255, 255, 255, 1.0);
+	text-align: left;
+	background-color: rgba(0, 0, 0, 1.0);
+}
+
+.column p {
+	font-weight: 300;
+	font-size: 2em;
+	padding: 0 0 0.5em;
+	margin: 0;
+	line-height: 1.5;
+}
+
+.ros-demos a,
+button {
+	border: none;
+	padding: 0.6em 1.2em;
+	background: transparent;
+	color: #fff;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: 400;
+	text-shadow: #000 1px 1px;
+}
+
+button {
+	position: absolute;
+	left: 32px;
+	top: 36px;
+}
+
+.ros-demos a:hover,
+.ros-demos a:active,
+.ros-demos a.current-demo {
+	background: rgba(216, 49, 91, 1);
+}
+
+button {
+	background: transparent;
+}
+
+button:hover,
+button:active {
+	border: 1px solid #fff;
+}
+
+.related {
+	text-align: center;
+	font-size: 1.5em;
+	margin-top: 3em;
+	clear: both;
+	padding: 3em 0;
+}
+
+.related a {
+	font-weight: 700;
+	font-size: 0.9em;
+}
+
+.flex-container {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	text-align: center;
+}
+
+.flex-container .n {
+	width: 180px;
+	height: 100px;
+}
+
+.ltr {
+	text-align: center;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.utd {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	align-items: center;
+}
+
+.svg-arrow {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	text-align: center;
+}
+
+.svg-arrow svg {
+	height: 20px;
+	width: 20px;
+}
+
+.italic {
+	font-style: italic;
+	font-size: 20px;
+}
+
+.vno {
+	visibility: hidden;
+}
+
+.arrow svg {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.arrow svg:hover {
+	color: rgba(255, 255, 255, 1.0);
+}
+
+.roslibjsworkflow .round {
+	width: 180px;
+	height: 100px;
+	border-radius: 10px;
+	overflow: hidden;
+	justify-content: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.roslibjsworkflow .round .mark {
+	position: relative;
+	left: 14px;
+	top: -80px;
+	width: 10px;
+	height: 60px;
+	border-radius: 12px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 1000;
+}
+
+.roslibjsworkflow .round .roundnow {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.4);
+	-webkit-animation: roundnow 300s linear infinite;
+	animation: roundnow 300s linear infinite;
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	font-size: 26px;
+}
+
+/* .roundnow:hover {
+	background-color: rgba(10, 36, 99, 1.0);
+} */
+
+.roundcolor {
+	background: rgba(216, 49, 91, 1.0) !important;
+}
+
+.roundcolor2 {
+	background: rgba(10, 36, 99, 1.0) !important;
+}
+
+input {
+	border: 0px;
+	padding: 16px 30px;
+	margin: 2em auto;
+	font-size: 1em;
+	background-color: #fff;
+	color: rgba(10, 36, 99, 1.0) ;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	width: 100%;
+}
+
+input:hover {
+	cursor: pointer;
+	color: #fff;
+  background-color: rgba(10, 36, 99, 1.0);
+	border: 0px;
+}
+
+
+@media screen and (max-width: 46.0625em) {
+	.ros-header {
+		margin-bottom: 0;
+		padding-bottom: 1em;
+	}
+	.column {
+		width: 100%;
+		min-width: auto;
+		min-height: 0;
+		padding: 2em;
+		text-align: center;
+	}
+	.column p {
+		font-size: 1.5em;
+	}
+	.column:nth-child(2) {
+		text-align: center;
+		box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+	}
+}
+
+@media screen and (max-width: 25em) {
+	.ros-header {
+		font-size: 80%;
+	}
+	.ros-top {
+		font-size: 120%;
+	}
+	.ros-icon span {
+		display: none;
+	}
+}
