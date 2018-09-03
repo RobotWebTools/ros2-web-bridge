@@ -1,6 +1,6 @@
 {
   "name": "ros2-web-bridge",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Bridge the web clients to ROS2.0 by a JSON interface",
   "main": "index.js",
   "keywords": [
@@ -43,7 +43,7 @@
   "dependencies": {
     "commander": "^2.12.2",
     "debug": "^3.1.0",
-    "rclnodejs": "^0.4.0",
+    "rclnodejs": "^0.x.0",
     "uuid": "^3.1.0",
     "ws": "^6.0.0"
   }
