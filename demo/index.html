@@ -79,7 +79,7 @@
 	<script src="js/controller.js"></script>
 	<script>
 		let ros = new ROSLIB.Ros();
-		let bridgeHost = '127.0.0.1';
+		let bridgeHost = window.location.hostname;
 		let bridgePort = 9090;
 		
 		ros.on('connection', function() {

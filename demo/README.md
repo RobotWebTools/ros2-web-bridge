@@ -36,10 +36,7 @@ $ npm install
 $ npm install -g http-server
 ```
 
-## Run demo
-### Update the web bridge up
-Get the Up-board Squared IP address, and update it in [index.html](./index.html) at line 84: replace `127.0.0.1` to the IP
-
+## Run the demo
 ### Start up MicroRTPSAgent
 New a terminal session, run
 ```
@@ -64,8 +61,7 @@ $ http-server -c-1
 ```
 
 ### Try to control the robot remotely
-Now you can put the TurtleBot3 robot on the ground. Let another PC at the same wireless network, then open the browser on this PC and enter:
-`http://<up-board ip>:8080`. After the page loaded, you can press the `Up/Left/Right/Down` buttons to control the robot remotely.
+Now you can put the TurtleBot3 robot on the ground. Let another PC be in the same wireless network, then launch the browser and enter: `http://<up-board ip>:8080`. After the page loaded, you can press the `Up/Left/Right/Down` buttons to control the robot remotely.
 
 ## Known limitation:
 If you shutdown the MicroRTPSAgent utility, you have to reset the OpenCR before you launch it again.
