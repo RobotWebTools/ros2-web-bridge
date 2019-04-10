@@ -43,7 +43,8 @@ module.exports = function() {
     {
       title: 'call_service positive case 1: full fields',
       callServiceMsg: { op: 'call_service', id: 'call_service_id1', service: 'add_two_ints',
-        args: {request: {a: 1, b: 2}, type: 'example_interfaces/AddTwoInts'},
+        args: {a: 1, b: 2},
+        type: 'example_interfaces/AddTwoInts',
         fragment_size: 1, compression: 'none'
       },
       responseCount: 2,
@@ -53,7 +54,8 @@ module.exports = function() {
     {
       title: 'call_service positive case 2: full fields with full service name',
       callServiceMsg: { op: 'call_service', id: 'call_service_id2', service: '/add_two_ints',
-        args: {request: {a: 1, b: 2}, type: 'example_interfaces/AddTwoInts'},
+        args: {a: 1, b: 2},
+        type: 'example_interfaces/AddTwoInts',
         fragment_size: 1, compression: 'none'
       },
       responseCount: 2,
@@ -63,7 +65,8 @@ module.exports = function() {
     {
       title: 'call_service positive case 3: no id field',
       callServiceMsg: { op: 'call_service', service: 'add_two_ints',
-        args: {request: {a: 3, b: 4}, type: 'example_interfaces/AddTwoInts'},
+        args: {a: 3, b: 4},
+        type: 'example_interfaces/AddTwoInts',
         fragment_size: 1, compression: 'none'
       },
       responseCount: 2,
@@ -73,7 +76,7 @@ module.exports = function() {
     {
       title: 'call_service positive case 4: no fragment_size field',
       callServiceMsg: { op: 'call_service',  id: 'call_service_id4', service: 'add_two_ints',
-        args: {request: {a: 5, b: 6}, type: 'example_interfaces/AddTwoInts'}, compression: 'none'
+        args: {a: 5, b: 6}, type: 'example_interfaces/AddTwoInts', compression: 'none'
       },
       responseCount: 2,
       opStatus: 'none',
@@ -82,7 +85,7 @@ module.exports = function() {
     {
       title: 'call_service positive case 5: no compression field',
       callServiceMsg: { op: 'call_service', id: 'call_service_id5', service: 'add_two_ints',
-        args: {request: {a: 7, b: 8}, type: 'example_interfaces/AddTwoInts'}, fragment_size: 1
+        args: {a: 7, b: 8}, type: 'example_interfaces/AddTwoInts', fragment_size: 1
       },
       responseCount: 2,
       opStatus: 'none',
@@ -91,15 +94,14 @@ module.exports = function() {
     {
       title: 'call_service negative case 1: args without type information',
       callServiceMsg: { op: 'call_service', id: 'call_service_id6', service: 'add_two_ints',
-        args: {request: {a: 9, b: 10}, fragment_size: 1, compression: 'none'}
-      },
+        args: {a: 9, b: 10}, fragment_size: 1, compression: 'none'},
       responseCount: 1,
       opStatus: 'error'
     },
     {
       title: 'call_service negative case 2: unknown service',
       callServiceMsg: { op: 'call_service', id: 'call_service_id7', service: 'add_two_float',
-        args: {request: {a: 11, b: 12}, type: 'example_interfaces/AddTwoInts'},
+        args: {a: 11, b: 12}, type: 'example_interfaces/AddTwoInts',
         fragment_size: 1, compression: 'none'
       },
       responseCount: 1,
@@ -108,7 +110,7 @@ module.exports = function() {
     {
       title: 'call_service field checking: invalid service',
       callServiceMsg: { op: 'call_service', id: 'call_service_id8', service: 42,
-        args: {request: {a: 13, b: 14}, type: 'example_interfaces/AddTwoInts'},
+        args: {a: 13, b: 14}, type: 'example_interfaces/AddTwoInts',
         fragment_size: 1, compression: 'none'
       },
       responseCount: 1,
@@ -136,10 +138,8 @@ module.exports = function() {
 
         if (response.op === 'set_level') {
           assert.deepStrictEqual(response.level, testData.opStatus);
-          if (testData.responseCount === 1) {
-            ws.close();
-            done();
-          }
+          ws.close();
+          done();
         }
         if (testData.expectedResponse && response.op === testData.expectedResponse.op) {
           assert.deepStrictEqual(response.result, testData.expectedResponse.result);

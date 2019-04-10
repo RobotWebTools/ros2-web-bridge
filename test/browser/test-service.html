@@ -36,8 +36,7 @@
         a: 1,
         b: 2
       });
-      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
-      reqService.callService(args, function(result) {
+      reqService.callService(request, function(result) {
       });
 
     }, 'Service.advertise() positive case 1');
@@ -82,8 +81,7 @@
         a: 3,
         b: 4
       });
-      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
-      reqService.callService(args, function(result) {
+      reqService.callService(request, function(result) {
         assert_equals(result.sum, 7);
         t.done();
       });
@@ -141,8 +139,7 @@
         name: '/add_two_ints5',
         serviceType: 'example_interfaces/AddTwoInts'
       });
-      var args = {request: {a: 9, b: 10}, type: 'example_interfaces/AddTwoInts'};
-      reqService.callService(args, function(result) {
+      reqService.callService({a: 9, b: 10}, function(result) {
         assert_equals(result.sum, 19);
         t.done();
       });
@@ -171,8 +168,7 @@
       var request = new ROSLIB.ServiceRequest({
         c: 9, d: 10
       });
-      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
-      reqService.callService(args, function(result) {
+      reqService.callService(request, function(result) {
         assert_unreached('Never go to here as callService() failed.');
       });
       setTimeout(function() {
@@ -211,8 +207,7 @@
         a: 11,
         b: 12
       });
-      var args = {request: request, type: 'example_interfaces/AddTwoInts'};
-      reqService.callService(args, function(result) {
+      reqService.callService(request, function(result) {
         assert_true(result instanceof ROSLIB.ServiceResponse);
         assert_equals(result.sum, 23);
         t.done();

@@ -6,6 +6,12 @@
 
 ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTools/rclnodejs) client, provides a JSON interface to [ROS 2.0](https://github.com/ros2/ros2/wiki) by adopting the [rosbridge v2 protocol](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md). The bridge can process commands through JSON tuneled over WebSockets.
 
+## ROS2 support
+
+The ros2-web-bridge **SUPPORTS** the latest ROS 2 stable release by default, please visit the [relase channel](https://github.com/ros2/ros2/releases) to check out the information.
+
+Any one who wants to run on the nightly build of ROS 2, please change the `dependencies` section of [package.json](https://github.com/RobotWebTools/ros2-web-bridge/blob/develop/package.json) file to install other version of [rclnodejs](https://github.com/RobotWebTools/rclnodejs#match-with-ros-20-stable-releases).
+
 ## Supported Clients
 
 A client is a program that communicates with ros2-web-bridge using its JSON API. Clients include:
@@ -16,7 +22,7 @@ A client is a program that communicates with ros2-web-bridge using its JSON API.
 
 1.Prepare for ROS2
 
-Please reference the [wiki](https://github.com/ros2/ros2/wiki/Installation) to install ROS2.
+Please reference the [wiki](https://index.ros.org/doc/ros2/Installation/) to install ROS2.
 
 2.Install `Node.js`
 You can install Node.js:
@@ -70,7 +76,6 @@ opreations | rosbridge v2.0 protocol spec | ros2-web-bridge implementation |
 :------------: |  :------------ |  :------------- |
 publish | If the msg is a subset of the type of the topic, then a warning status message is sent and the unspecified fields are filled in with [defaults](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#343-publish--publish-). | If the subset of the msg is unspecified, then an error status message is sent and this message is dropped.
 subscribe | The type of the topic is [optional](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#344-subscribe). | The type of the topic must be offered.
-call_service | No requirement of the service [type](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md#346-call-service). | You have to transfer both the request and the type of service through `args`.
 
 If you use [roslibjs](https://static.robotwebtools.org/roslibjs/current/roslib.js) as the client running in the browser, please reference the code snippet below:
 
@@ -87,27 +92,6 @@ var example = new ROSLIB.Topic({
 // Subscribe a topic.
 example.subscribe(function(message) {
   console.log(`Receive message: ${message}`);
-});
-```
-
-* Call a service.
-
-```JavaScript
-let addTwoInts = new ROSLIB.Service({
-  ros : ros,
-  name : '/add_two_ints',
-  serviceType : 'example_interfaces/AddTwoInts'
-});
-
-let request = new ROSLIB.ServiceRequest({
-  a : 1,
-  b : 2
-});
-
-// Encapsulate the request and the type of service into args.
-let args = {request: request, type: 'example_interfaces/AddTwoInts'};
-addTwoInts.callService(args, function(result) {
-  console.log(`Receive result: ${result.sum}`);
 });
 ```
 

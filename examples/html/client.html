@@ -50,10 +50,8 @@
     b : 2
   });
 
-  var args = {request: request, type: 'example_interfaces/AddTwoInts'};
-
   // Send the request
-  addTwoInts.callService(args, function(result) {
+  addTwoInts.callService(request, function(result) {
     document.getElementById("sum").innerText = result.sum;
     console.log('Result for service call on ' + addTwoInts.name + ': ' + result.sum);
   });
