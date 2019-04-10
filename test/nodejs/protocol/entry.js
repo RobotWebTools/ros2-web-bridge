@@ -91,7 +91,7 @@ describe('Rosbridge v2.0 protocol testing', function() {
     require('./test-op-neg.js')();
   });
   describe('service_response operation', function() {
-    require('./test-service-response.js')();
+    require('./test-service-response.js');
   });  
 });
 
