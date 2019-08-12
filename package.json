@@ -41,10 +41,10 @@
     "puppeteer": "^1.2.0"
   },
   "dependencies": {
-    "commander": "^2.12.2",
+    "commander": "^3.0.0",
     "debug": "^4.1.1",
-    "rclnodejs": "0.9.0",
+    "rclnodejs": "^0.10.1",
     "uuid": "^3.1.0",
-    "ws": "^6.0.0"
+    "ws": "^7.1.1"
   }
 }

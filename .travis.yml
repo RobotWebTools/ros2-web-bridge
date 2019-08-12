@@ -9,7 +9,7 @@ branches:
   - master
 
 before_install:
-  - sudo docker pull ubuntu:xenial
+  - sudo docker pull ubuntu:bionic
   - sudo docker build -t rcldocker .
 
 script:
