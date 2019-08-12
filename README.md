@@ -8,7 +8,7 @@ ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTool
 
 ## ROS2 support
 
-The ros2-web-bridge **SUPPORTS** the latest ROS 2 stable release by default, please visit the [relase channel](https://github.com/ros2/ros2/releases) to check out the information.
+The ros2-web-bridge **SUPPORTS** the latest ROS 2 stable release by default (currently [Dashing Patch 2](https://github.com/ros2/ros2/releases/tag/release-dashing-20190806)), please visit the [relase channel](https://github.com/ros2/ros2/releases) to check out the information.
 
 Any one who wants to run on the nightly build of ROS 2, please change the `dependencies` section of [package.json](https://github.com/RobotWebTools/ros2-web-bridge/blob/develop/package.json) file to install other version of [rclnodejs](https://github.com/RobotWebTools/rclnodejs#match-with-ros-20-stable-releases).
 
