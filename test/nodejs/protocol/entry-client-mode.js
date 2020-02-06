@@ -18,7 +18,7 @@ const assert = require('assert');
 const child = require('child_process');
 const path = require('path');
 const WebSocket = require('ws');
-const TEST_PORT = 9091
+const TEST_PORT = 9091;
 
 var rosbridge = path.resolve(__dirname, '../../../bin/rosbridge.js');
 
@@ -30,7 +30,7 @@ describe('Rosbridge client mode', function() {
   function startBridge() {
     bridgeClient = child.fork(rosbridge, 
       ['--address=ws://localhost:'+TEST_PORT],
-      {silent: true},
+      {silent: true}
     );
   }
 

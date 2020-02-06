@@ -27,7 +27,7 @@ function createServer(options) {
     server = new WebSocket(options.address);
   } else {
     options.port = options.port || 9090;
-    debug('Starting server on port ' + options.port)
+    debug('Starting server on port ' + options.port);
     server = new WebSocket.Server({port: options.port});
   }
 
@@ -81,8 +81,8 @@ function createServer(options) {
 
     rclnodejs.spin(node);
     debug('The ros2-web-bridge has started.');
-    let ws_addr = (options.address) ? options.address : `ws://localhost:${options.port}`;
-    console.log(`Websocket started on ${ws_addr}`);
+    let wsAddr = (options.address) ? options.address : `ws://localhost:${options.port}`;
+    console.log(`Websocket started on ${wsAddr}`);
   }).catch(error => {
     debug(`Unknown error happened: ${error}, the module will be terminated.`);
     server.close();
