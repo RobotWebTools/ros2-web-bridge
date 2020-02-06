@@ -15,14 +15,21 @@
 'use strict';
 
 const rclnodejs = require('rclnodejs');
-const {Server} = require('ws');
+const WebSocket = require('ws');
 const Bridge = require('./lib/bridge.js');
 const debug = require('debug')('ros2-web-bridge:index');
-
 function createServer(options) {
   options = options || {};
-  options.port = options.port || 9090;
-  let server = new Server({port: options.port});
+  options.address = options.address || null;
+  let server;
+  if (options.address != null) {
+    debug('Starting in client mode; connecting to ' + options.address);
+    server = new WebSocket(options.address);
+  } else {
+    options.port = options.port || 9090;
+    debug('Starting server on port ' + options.port)
+    server = new WebSocket.Server({port: options.port});
+  }
 
   process.on('exit', () => {
     debug('Application will exit.');
@@ -40,7 +47,7 @@ function createServer(options) {
       });
     }
 
-    server.on('connection', (ws) => {
+    const makeBridge = (ws) => {
       let bridge = new Bridge(node, ws);
       bridgeMap.set(bridge.bridgeId, bridge);
 
@@ -58,7 +65,13 @@ function createServer(options) {
       bridge.on('close', (bridgeId) => {
         bridgeMap.delete(bridgeId);
       });
-    });
+    };
+    server.on('open', () => debug('Connected as client'));
+    if (options.address) {
+      makeBridge(server);
+    } else {
+      server.on('connection', makeBridge);
+    }
 
     server.on('error', (error) => {
       closeAllBridges();
@@ -68,7 +81,8 @@ function createServer(options) {
 
     rclnodejs.spin(node);
     debug('The ros2-web-bridge has started.');
-    console.log(`The web socket server started on ws://localhost:${options.port}`);
+    let ws_addr = (options.address) ? options.address : `ws://localhost:${options.port}`;
+    console.log(`Websocket started on ${ws_addr}`);
   }).catch(error => {
     debug(`Unknown error happened: ${error}, the module will be terminated.`);
     server.close();
