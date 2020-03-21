@@ -48,7 +48,7 @@ function createServer(options) {
     }
 
     const makeBridge = (ws) => {
-      let bridge = new Bridge(node, ws);
+      let bridge = new Bridge(node, ws, options.status_level);
       bridgeMap.set(bridge.bridgeId, bridge);
 
       bridge.on('error', (error) => {
