@@ -26,7 +26,7 @@ describe('Rosbridge v2.0 protocol testing', function() {
   this.timeout(5 * 1000);
 
   before(function(done) {
-    webSocketServer = child.fork(rosbridge, ["-l", "none"], {silent: true});
+    webSocketServer = child.fork(rosbridge, ['-l', 'none'], {silent: true});
     webSocketServer.stdout.on('data', function(data) {
       done();
     });

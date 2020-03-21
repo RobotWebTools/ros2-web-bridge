@@ -23,7 +23,7 @@ module.exports = function() {
       title: 'set_level to error',
       ops: [
         {
-          payload: {op: 'set_level', id: 'id1', level:'error'},
+          payload: {op: 'set_level', id: 'id1', level: 'error'},
           status: null
         }
       ],
@@ -32,7 +32,7 @@ module.exports = function() {
       title: 'set_level to warning',
       ops: [
         {
-          payload: {op: 'set_level', id: 'id1', level:'warning'},
+          payload: {op: 'set_level', id: 'id1', level: 'warning'},
           status: null
         }
       ],
@@ -41,7 +41,7 @@ module.exports = function() {
       title: 'set_level to info',
       ops: [
         {
-          payload: {op: 'set_level', id: 'id1', level:'info'},
+          payload: {op: 'set_level', id: 'id1', level: 'info'},
           status: null
         }
       ],
@@ -50,7 +50,7 @@ module.exports = function() {
       title: 'set_level to none',
       ops: [
         {
-          payload: {op: 'set_level', id: 'id1', level:'none'},
+          payload: {op: 'set_level', id: 'id1', level: 'none'},
           status: 'none'
         }
       ],
@@ -59,7 +59,7 @@ module.exports = function() {
       title: 'set_level to invalid',
       ops: [
         {
-          payload: {op: 'set_level', id: 'id1', level:'invalid'},
+          payload: {op: 'set_level', id: 'id1', level: 'invalid'},
           status: 'error'
         }
       ],
