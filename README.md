@@ -44,6 +44,12 @@ npm install
 node bin/rosbridge.js
 ```
 
+If you want to start the server in a "client" mode (i.e. connecting the bridge to an existing websocket server, do this instead:
+
+```bash
+node bin/rosbridge.js --address ws://<address>:<port>
+```
+
 2.Start the [express](https://www.npmjs.com/package/express) server:
 
 ```bash
