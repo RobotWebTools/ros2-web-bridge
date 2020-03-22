@@ -18,10 +18,54 @@ const rclnodejs = require('rclnodejs');
 const WebSocket = require('ws');
 const Bridge = require('./lib/bridge.js');
 const debug = require('debug')('ros2-web-bridge:index');
+
+// rclnodejs node
+let node;
+
+// Websocket server (or client if client mode set via --address)
+let server;
+let connectionAttempts = 0;
+
+// Map of bridge IDs to Bridge objects
+let bridgeMap = new Map();
+
+function closeAllBridges() {
+  bridgeMap.forEach((bridge, bridgeId) => {
+    bridge.close();
+  });
+}
+
+function shutDown(error) {
+  // Closing the server triggers the individual connections to be closed.
+  if (server) {
+    server.close();
+  }
+  if (!rclnodejs.isShutdown()) {
+    rclnodejs.shutdown();
+  }
+  if (error) {
+    throw error;
+  }
+}
+
 function createServer(options) {
   options = options || {};
   options.address = options.address || null;
-  let server;
+  process.on('exit', () => {
+    debug('Application will exit.');
+    shutDown();
+  });
+  return rclnodejs.init()
+    .then(() => {
+      node = rclnodejs.createNode('ros2_web_bridge');
+      rclnodejs.spin(node);
+      debug('ROS2 node started');
+      createConnection(options);
+    })
+    .catch(error => shutDown(error));
+}
+
+function createConnection(options) {
   if (options.address != null) {
     debug('Starting in client mode; connecting to ' + options.address);
     server = new WebSocket(options.address);
@@ -31,63 +75,53 @@ function createServer(options) {
     server = new WebSocket.Server({port: options.port});
   }
 
-  process.on('exit', () => {
-    debug('Application will exit.');
-    // Closing the server will trigger the individual connections to be closed and cleaned.
-    server.close();
-  });
+  const makeBridge = (ws) => {
+    let bridge = new Bridge(node, ws, options.status_level);
+    bridgeMap.set(bridge.bridgeId, bridge);
 
-  return rclnodejs.init().then(() => {
-    let node = rclnodejs.createNode('ros2_web_bridge');
-    let bridgeMap = new Map();
-
-    function closeAllBridges() {
-      bridgeMap.forEach((bridge, bridgeId) => {
-        bridge.close();
-      });
-    }
-
-    const makeBridge = (ws) => {
-      let bridge = new Bridge(node, ws, options.status_level);
-      bridgeMap.set(bridge.bridgeId, bridge);
-
-      bridge.on('error', (error) => {
-        let bridge = error.bridge;
-        if (bridge) {
-          debug(`Error happened, the bridge ${error.bridge.bridgeId} will be closed.`);
-          bridge.close();
-          bridgeMap.delete(bridge.bridgeId);
-        } else {
-          debug(`Unknown error happened: ${error}.`);
-        }
-      });
-
-      bridge.on('close', (bridgeId) => {
-        bridgeMap.delete(bridgeId);
-      });
-    };
-    server.on('open', () => debug('Connected as client'));
-    if (options.address) {
-      makeBridge(server);
-    } else {
-      server.on('connection', makeBridge);
-    }
-
-    server.on('error', (error) => {
-      closeAllBridges();
-      rclnodejs.shutdown();
-      debug(`WebSocket server error: ${error}, the module will be terminated.`);
+    bridge.on('error', (error) => {
+      debug(`Bridge ${bridge.bridgeId} closing with error: ${error}`);
+      bridge.close();
+      bridgeMap.delete(bridge.bridgeId);
     });
 
-    rclnodejs.spin(node);
-    debug('The ros2-web-bridge has started.');
-    let wsAddr = (options.address) ? options.address : `ws://localhost:${options.port}`;
-    console.log(`Websocket started on ${wsAddr}`);
-  }).catch(error => {
-    debug(`Unknown error happened: ${error}, the module will be terminated.`);
-    server.close();
-    rclnodejs.shutdown();
+    bridge.on('close', (bridgeId) => {
+      bridgeMap.delete(bridgeId);
+    });
+  };
+
+  server.on('open', () => {
+    debug('Connected as client');
+    connectionAttempts = 0;
   });
+  
+  if (options.address) {
+    makeBridge(server);
+  } else {
+    server.on('connection', makeBridge);
+  }
+
+  server.on('error', (error) => {
+    closeAllBridges();
+    debug(`WebSocket error: ${error}`);
+  });
+
+  server.on('close', (event) => {
+    debug(`Websocket closed: ${event}`);
+    if (options.address) {
+      closeAllBridges();
+      connectionAttempts++;
+      // Gradually increase reconnection interval to prevent
+      // overwhelming the server, up to a maximum delay of ~1 minute
+      // https://en.wikipedia.org/wiki/Exponential_backoff
+      const delay = Math.pow(1.5, Math.min(10, Math.floor(Math.random() * connectionAttempts)));
+      debug(`Reconnecting to ${options.address} in ${delay.toFixed(2)} seconds`);
+      setTimeout(() => createConnection(options), delay*1000);
+    }
+  });
+
+  let wsAddr = options.address || `ws://localhost:${options.port}`;
+  console.log(`Websocket started on ${wsAddr}`);
 }
 
 module.exports = {
