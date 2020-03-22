@@ -23,10 +23,10 @@ var rosbridge = path.resolve(__dirname, '../../../bin/rosbridge.js');
 
 describe('Rosbridge v2.0 protocol testing', function() {
   var webSocketServer;
-  this.timeout(60 * 1000);
+  this.timeout(5 * 1000);
 
   before(function(done) {
-    webSocketServer = child.fork(rosbridge, {silent: true});
+    webSocketServer = child.fork(rosbridge, ['-l', 'none'], {silent: true});
     webSocketServer.stdout.on('data', function(data) {
       done();
     });
@@ -81,6 +81,10 @@ describe('Rosbridge v2.0 protocol testing', function() {
 
   describe('unadvertise_service operation', function() {
     require('./test-unadvertise-service.js')();
+  });
+
+  describe('set_level operation', function() {
+    require('./test-set-level.js')();
   });
 
   // Disable this case temporarily, sine it gets stuck on Windows CI.

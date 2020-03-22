@@ -134,9 +134,10 @@ module.exports = function() {
         ws.send(JSON.stringify(testData.callServiceMsg));
       });
       ws.on('message', function(data) {
+        console.log(data);
         let response = JSON.parse(data);
 
-        if (response.op === 'set_level') {
+        if (response.op === 'status') {
           assert.deepStrictEqual(response.level, testData.opStatus);
           ws.close();
           done();
