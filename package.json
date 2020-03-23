@@ -1,6 +1,6 @@
 {
   "name": "ros2-web-bridge",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Bridge the web clients to ROS2.0 by a JSON interface",
   "main": "index.js",
   "keywords": [
