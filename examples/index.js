@@ -17,7 +17,7 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('.'));
+app.use(express.static('html'));
 
-app.listen(3000);
-console.log('The web server started on http://localhost:3000');
+app.listen(3000, '0.0.0.0');
+console.log('The web server started on http://0.0.0.0:3000');
