@@ -9,6 +9,7 @@ branches:
   - master
 
 before_install:
+  - sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - sudo docker pull ubuntu:bionic
   - sudo docker build -t rcldocker .
 
