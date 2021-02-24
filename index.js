@@ -58,11 +58,24 @@ function createServer(options) {
   return rclnodejs.init()
     .then(() => {
       node = rclnodejs.createNode('ros2_web_bridge');
-      rclnodejs.spin(node);
       debug('ROS2 node started');
+      let timeout = options.delay_between_messages;
+      if (timeout == undefined) {
+        timeout = 0;
+      }
       createConnection(options);
+      spin(node, timeout);
     })
     .catch(error => shutDown(error));
+}
+
+function spin(node, timeout) {
+  if (rclnodejs.isShutdown()) {
+    shutDown();
+    return;
+  }
+  node.spinOnce();
+  setTimeout(spin, timeout, node, timeout);
 }
 
 function createConnection(options) {
