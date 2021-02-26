@@ -4,9 +4,9 @@
 
 ## Server Implementations of the rosbridge v2 Protocol
 
-ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTools/rclnodejs) client, provides a JSON interface to [ROS 2.0](https://github.com/ros2/ros2/wiki) by adopting the [rosbridge v2 protocol](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md). The bridge can process commands through JSON tuneled over WebSockets.
+ros2-web-bridge, which leverages the [rclnodejs](https://github.com/RobotWebTools/rclnodejs) client, provides a JSON interface to [ROS 2](https://index.ros.org/doc/ros2/) by adopting the [rosbridge v2 protocol](https://github.com/RobotWebTools/rosbridge_suite/blob/develop/ROSBRIDGE_PROTOCOL.md). The bridge can process commands through JSON tuneled over WebSockets.
 
-## ROS2 support
+## ROS 2 support
 
 The ros2-web-bridge **SUPPORTS** the latest ROS 2 stable release by default (currently [Dashing Patch 2](https://github.com/ros2/ros2/releases/tag/release-dashing-20190806)), please visit the [relase channel](https://github.com/ros2/ros2/releases) to check out the information.
 
@@ -20,47 +20,40 @@ A client is a program that communicates with ros2-web-bridge using its JSON API.
 
 ## Install
 
-1.Prepare for ROS2
-
-Please reference the [wiki](https://index.ros.org/doc/ros2/Installation/) to install ROS2.
-
-2.Install `Node.js`
-You can install Node.js:
-
-* Download from Node.js offical [website](https://nodejs.org/en/), and install it.
-* Use the Node Version Manager ([nvm](https://github.com/creationix/nvm)) to install it.
-
-3.Install dependencies
-
-```javascript
-npm install
-```
+1. Prepare for ROS 2
+    Please reference the [documentation](https://index.ros.org/doc/ros2/Installation/) to install ROS 2.
+2. Install `Node.js`
+    You can install Node.js:
+    * Download from Node.js offical [website](https://nodejs.org/en/), and install it.
+    * Use the Node Version Manager ([nvm](https://github.com/creationix/nvm)) to install it.
+3. Clone and install dependencies
+    Note that a ROS 2 installation has to be sourced before installing dependencies.
+    ```bash
+    $ git clone https://github.com/RobotWebTools/ros2-web-bridge.git
+    $ cd ros2-web-bridge
+    $ source /opt/ros/$DISTRO/setup.sh  # or a source installation
+    $ npm install
+    ```
 
 ## Run Examples
 
-1.Start `ros2-web-bridge` module:
-
-```bash
-node bin/rosbridge.js
-```
-
-If you want to start in client mode (i.e. connecting the bridge to an existing websocket server), do this instead:
-
-```bash
-node bin/rosbridge.js --address ws://<address>:<port>
-```
-
-2.Start the [express](https://www.npmjs.com/package/express) server:
-
-```bash
-cd examples && node index.js
-```
-
-3.Open your browser, and navigate to URL:
-
-``` bash
-http://localhost:3000/html/publisher.html
-```
+1. Make sure to source a ROS 2 installation, e.g.:
+    ```bash
+    $ source /opt/ros/$DISTRO/setup.sh  # or a source installation
+    ```
+2. Start `ros2-web-bridge` module:
+    ```bash
+    $ node bin/rosbridge.js
+    ```
+    If you want to start in client mode (i.e. connecting the bridge to an existing websocket server), do this instead:
+    ```bash
+    $ node bin/rosbridge.js --address ws://<address>:<port>
+    ```
+3. Start the [express](https://www.npmjs.com/package/express) server:
+    ```bash
+    $ cd examples && node index.js
+    ```
+4. Open your browser, and navigate to URL: http://localhost:3000/html/publisher.html
 
 ## Not supported `op`
 
@@ -85,21 +78,20 @@ subscribe | The type of the topic is [optional](https://github.com/RobotWebTools
 
 If you use [roslibjs](https://static.robotwebtools.org/roslibjs/current/roslib.js) as the client running in the browser, please reference the code snippet below:
 
-* Subscribe a topic.
+* Subscribe to a topic.
+  ```JavaScript
+  // Define a topic with its type.
+  var example = new ROSLIB.Topic({
+    ros : ros,
+    name : '/example_topic',
+    messageType : 'std_msgs/String'
+  });
 
-```JavaScript
-// Define a topic with its type.
-var example = new ROSLIB.Topic({
-  ros : ros,
-  name : '/example_topic',
-  messageType : 'std_msgs/String'
-});
-
-// Subscribe a topic.
-example.subscribe(function(message) {
-  console.log(`Receive message: ${message}`);
-});
-```
+  // Subscribe to a topic.
+  example.subscribe(function(message) {
+    console.log(`Receive message: ${message}`);
+  });
+  ```
 
 ## Contributing
 
