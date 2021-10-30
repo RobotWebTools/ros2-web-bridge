@@ -139,8 +139,10 @@ module.exports = function() {
 
         if (response.op === 'status') {
           assert.deepStrictEqual(response.level, testData.opStatus);
-          ws.close();
-          done();
+          if (testData.responseCount === 1) {
+            ws.close();
+            done();
+          }
         }
         if (testData.expectedResponse && response.op === testData.expectedResponse.op) {
           assert.deepStrictEqual(response.result, testData.expectedResponse.result);
