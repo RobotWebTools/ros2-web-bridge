@@ -1,6 +1,17 @@
-# ros2-web-bridge[![Build Status](https://travis-ci.org/RobotWebTools/ros2-web-bridge.svg?branch=develop)](https://travis-ci.org/RobotWebTools/ros2-web-bridge)[![Build status](https://ci.appveyor.com/api/projects/status/upb8xbq0f05mtgff/branch/develop?svg=true)](https://ci.appveyor.com/project/minggangw/ros2-web-bridge/branch/develop)[![npm](https://img.shields.io/npm/dt/ros2-web-bridge.svg)](https://www.npmjs.com/package/ros2-web-bridge)[![license](https://img.shields.io/github/license/RobotWebTools/ros2-web-bridge.svg)](https://github.com/RobotWebTools/ros2-web-bridge/blob/develop/LICENSE)[![dependencies Status](https://david-dm.org/RobotWebTools/ros2-web-bridge/status.svg)](https://david-dm.org/RobotWebTools/ros2-web-bridge)
+# ros2-web-bridge [![Build Status](https://travis-ci.org/RobotWebTools/ros2-web-bridge.svg?branch=develop)](https://travis-ci.org/RobotWebTools/ros2-web-bridge)[![Build status](https://ci.appveyor.com/api/projects/status/upb8xbq0f05mtgff/branch/develop?svg=true)](https://ci.appveyor.com/project/minggangw/ros2-web-bridge/branch/develop)[![npm](https://img.shields.io/npm/dt/ros2-web-bridge.svg)](https://www.npmjs.com/package/ros2-web-bridge)[![license](https://img.shields.io/github/license/RobotWebTools/ros2-web-bridge.svg)](https://github.com/RobotWebTools/ros2-web-bridge/blob/develop/LICENSE)
 
-[![NPM](https://nodei.co/npm/ros2-web-bridge.png)](https://nodei.co/npm/ros2-web-bridge/)
+---
+
+## :warning: Warning :warning:
+
+This package is not actively maintained. Please use the [rosbridge_suite](https://github.com/RobotWebTools/rosbridge_suite) package instead for your ROS 2 websocket communication needs.
+
+## ros2-web-bridge vs rosbridge_suite
+
+- [`rosbridge_suite`](https://github.com/RobotWebTools/rosbridge_suite) (or `rosbridge_server`) is recommended for communicating with ROS 2 over websockets. It is written in Python and is actively maintained by the ROS web working group.
+- [`ros2-web-bridge`](https://github.com/RobotWebTools/ros2-web-bridge) (this project) is an earlier attempt at enabling ROS 2 communication over websockets. It is written in JavaScript, and requires Node.js to be installed on your robot. It cannot be installed via `rosdep` or `apt` like a regular ROS package, and must be cloned and built locally.
+
+---
 
 ## Server Implementations of the rosbridge v2 Protocol
 
