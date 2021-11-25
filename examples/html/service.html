@@ -36,7 +36,12 @@
   });
 
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect('ws://localhost:9090');
+  if (window.location.protocol == "https:") {
+    var ws_scheme = "wss://";
+  } else {
+    var ws_scheme = "ws://"
+  };
+  ros.connect(ws_scheme + window.location.hostname + ':9090');
 
   // Create a Service client with details of the service's name and service type.
   var addTwoInts = new ROSLIB.Service({

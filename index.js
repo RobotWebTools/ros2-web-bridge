@@ -55,6 +55,8 @@ function createServer(options) {
     debug('Application will exit.');
     shutDown();
   });
+  process.on('SIGINT', process.exit);
+
   return rclnodejs.init()
     .then(() => {
       node = rclnodejs.createNode('ros2_web_bridge');
